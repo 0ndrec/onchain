@@ -3,16 +3,14 @@ body {
   color: #fff;
   line-height: 1.5;
   padding-top: 2rem;
-  font-family: "Pixelify Sans", sans-serif;
+
+  font-family: "Geo", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  /* font-family: "Pixelify Sans", sans-serif; */
   font-optical-sizing: auto;
-
 }
 
-.header {
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-}
 
 
 h1 {
@@ -23,6 +21,14 @@ h1 {
   text-transform: uppercase;
   margin-bottom: 1rem;
   line-height: 1;
+}
+
+
+.header {
+  font-family: "Pixelify Sans", sans-serif !important;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 footer {
@@ -42,7 +48,7 @@ footer img {
 
 
 h2 {
-  color: #f6b73e;
+  color: #ffffff;
   font-size: 1.5rem;
   text-align: center;
   letter-spacing: 0.4rem;
@@ -51,13 +57,15 @@ h2 {
   line-height: 1;
 }
 
+
+
 p {
   text-align: center;
   margin-bottom: 2rem;
 }
 
 .container_navbar {
-
+  font-family: "Pixelify Sans", sans-serif !important;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
@@ -79,10 +87,19 @@ p {
   text-decoration: none;
   transition: all 0.3s;
   font-size: 20px;
-  font-family: "Pixelify Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
+}
+
+.caption {
+  color: #f6b73e;
+  font-size: 2.7rem;
+  text-align: center;
+  letter-spacing: 0.4rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  line-height: 1;
 }
 
 .container_hero {
@@ -95,11 +112,11 @@ p {
   margin-bottom: 2rem;
 }
 
-.container_hero h3 {
+.container_hero h4 {
   text-align: left;
   border-left: 2px dashed #32c146;
   font-weight: 100;
-  font-size: 20px;
+  font-size: 1.5rem;
   max-width: 40%;
   padding: 0.7rem;
 }
@@ -130,6 +147,7 @@ p {
 }
 
 .project_item .button {
+  font-family: "Pixelify Sans", sans-serif !important;
   border-bottom: #32c146 2px solid;
   text-transform: uppercase;
   background: #232323;
@@ -149,7 +167,7 @@ p {
   transition: all 0.3s;
 }
 
-.project h3 {
+.project h4 {
   color: hsl(0, 0%, 100%);
   text-align: center;
 }
@@ -170,11 +188,11 @@ p {
   margin-bottom: 2rem;
 }
 
-.container_info h3 {
+.container_info h4 {
   text-align: right;
   border-right: 2px dashed #32c146;
   font-weight: 100;
-  font-size: 20px;
+  font-size: 1.5rem;
   max-width: 40%;
   padding: 0.7rem;
 }
@@ -208,13 +226,13 @@ p {
   }
 
   h2 {
-    color: #f6b73e;
-    font-size: 1.5rem;
+    font-size: calc(1.3vw + 1.3vh + 2vmin);
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 1rem;
     line-height: 1;
   }
+
 
   .navbar {
     padding-top: 4rem;
@@ -239,15 +257,16 @@ p {
     justify-content: center;
     margin-bottom: 2rem;
   }
-  .container_hero h3 {
+  .container_hero h4 {
+    font-size: calc(1.3vw + 1.3vh + 2vmin);
     text-align: center;
     border-left: none;
-    border-bottom: #32c146 2px dashed;
     font-weight: auto;
     max-width: 99%;
     padding: 1.2rem;
     padding-bottom: 3rem;
   }
+
   .container_hero img {
     width: calc(20vw + 15vh + 2vmin);
     height: auto;
@@ -262,7 +281,8 @@ p {
     justify-content: center;
     margin-bottom: 2rem;
   }
-  .container_info h3 {
+  .container_info h4 {
+    font-size: calc(1.3vw + 1.3vh + 2vmin);
     text-align: center;
     border-right: none;
     border-bottom: #32c146 2px dashed;
@@ -271,6 +291,7 @@ p {
     padding: 1.2rem;
     padding-bottom: 3rem;
   }
+
   .container_info img {
     width: calc(20vw + 15vh + 2vmin);
     height: auto;
@@ -278,13 +299,14 @@ p {
 
   .project_item {
     border: none;
-    border-bottom: #32c146 2px solid;
     width: 90%;
     flex-direction: row;
     justify-content: space-between;
     font-size: inherit;
   }
   .container_projects {
+    border-bottom: #32c146 2px dashed;
+    border-top: #32c146 2px dashed;
     font-size: calc(1.3vw + 1.3vh + 2vmin);
     flex-direction: column;
   }

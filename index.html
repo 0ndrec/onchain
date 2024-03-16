@@ -6,6 +6,7 @@
   <title>ONCHAIN.RU - Trusted PoS Validator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geo:ital@0;1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <script src="anime.min.js"></script>
@@ -16,7 +17,7 @@
     <h1>
       ONCHAIN.RUN
     </h1>
-    <h2 class="subheader">
+    <h2>
       Stake with us!
     </h2>
   </div>
@@ -29,10 +30,13 @@
     </div>
   </div>
 
+  <h3 class="caption">
+    Reliability, Efficiency, Security
+  </h3>
   <div class="container_hero">
-    <h3>
+    <h4>
       Our team of blockchain validators leverages cutting-edge hardware to ensure maximum uptime, delivering unparalleled network reliability and performance. We proactively monitor drive wear using our unique, proprietary monitoring systems, ensuring optimal operation and longevity. Trust us to maintain the highest standards of efficiency and security for your blockchain needs.
-    </h3>
+    </h4>
     <div class="hero">
       <img src="img\cpu.webp" alt="">
     </div>
@@ -72,16 +76,16 @@
   </div>
 
 
-  <h2 class="info_main">
-    Let's grow together!
-  </h2>
+  <h3 class="caption">
+    Let's grow together
+  </h3>
   <div class="container_info">
     <div class="hero">
       <img src="img\comm.webp" alt="">
     </div>
-    <h3>
+    <h4>
       Is your project interested in attracting an audience? Or are you looking for talent in the field of content creation? We also offer unparalleled access to deeply engaged communities in blockchain and Web3, with large Telegram and Twitter groups at our disposal. Our platforms are ideal for promoting projects and connecting with a dedicated audience keen on innovation in this space. Join us to elevate your project's visibility and reach passionate enthusiasts today.
-    </h3>
+    </h4>
   </div>
 
   <footer>
@@ -91,29 +95,59 @@
 
 </body>
 
-<!-- Displaying the appearance of elements from bottom to top "project_item" -->
 <script>
-  anime({
-    targets: '.project_item',
-    translateY: [-100, 0],
-    opacity: [0, 1],
-    delay: anime.stagger(100),
-    easing: 'easeOutExpo',
-    duration: 1000
+  // Auto scroll page by presing the button services to down maximum
+  document.querySelector('.navbar a').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector('.container_info').scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+
+</script>
+
+<!-- Hendle a pressing button in "project_item". Open new tab -->
+<script>
+  const buttons = document.querySelectorAll('.project_item .button');
+  const projects_dict = {
+    'AVAIL': '',
+    'STREAMR': '',
+    'WARDEN': 'https://warden-explorer.paranorm.pro/warden/staking/wardenvaloper144nqxgt6jdrm4srzzgx4dvz04hd8q2e8hlu6gq',
+    'SIDE': ''
+  };
+  buttons.forEach((button, index) => {
+    button.addEventListener('click', function () {
+      if (projects_dict[button.parentElement.querySelector('.name').textContent].length < 6) {
+        return;
+      }
+      window.open(projects_dict[button.parentElement.querySelector('.name').textContent]);
+    });
   });
 </script>
 
-<!-- Displaying the like 3d flip loop animation with pause to "h2" -->
+<!-- Displaying the animation endless running strip from right to lest "h2" -->
 <script>
-  anime({
-    targets: '.subheader',
-    rotateX: '360deg',
-    loop: true,
-    direction: 'alternate',
-    easing: 'easeInOutSine',
-    duration: 500,
-    delay: 1500
-  });
+  const textWrapper = document.querySelector('.header h2');
+  textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+  anime.timeline({
+      loop: true
+    })
+    .add({
+      targets: '.header h2 .letter',
+      translateX: [40, 0],
+      translateZ: 0,
+      opacity: [0, 1],
+      easing: "easeOutExpo",
+      duration: 1200,
+      delay: (el, i) => 500 + 30 * i
+    }).add({
+      targets: '.header h2 .letter',
+      translateX: [0, -30],
+      opacity: [1, 0],
+      easing: "easeInExpo",
+      duration: 1100,
+      delay: (el, i) => 100 + 30 * i
+    });
 </script>
 
 
