@@ -4,92 +4,104 @@
 <head>
   <meta charset="UTF-8">
   <title>ONCHAIN.RU - Trusted PoS Validator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <script src="anime.min.js"></script>
 </head>
 
 <body>
-  <h1>
-    ONCHAIN.RUN X CryptoNotes✌🏻
-  </h1>
-  <h2>
-    Stake with us! Trusted PoS Validator & Node Provider
-  </h2>
+  <div class="header">
+    <h1>
+      ONCHAIN.RUN
+    </h1>
+    <h2>
+      Stake with us!
+    </h2>
+  </div>
 
-  <div class="navbar">
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
+  <div class="container_navbar">
+    <div class="navbar">
+      <a href="#">SERVICES</a>
+      <a href="#">CONTACT</a>
+      <a href="#">GUIDES</a>
+    </div>
+  </div>
+
+  <div class="container_hero">
+    <h3>
+      Our team of blockchain validators leverages cutting-edge hardware to ensure maximum uptime, delivering unparalleled network reliability and performance. We proactively monitor drive wear using our unique, proprietary monitoring systems, ensuring optimal operation and longevity. Trust us to maintain the highest standards of efficiency and security for your blockchain needs.
+    </h3>
+    <div class="hero">
+      <img src="img\cpu.webp" alt="">
+    </div>
   </div>
   
-  <p>
-    Make love, not war & Stake with us!
-  </p>
 
-  
-
-  <div class="container_carusel">
+  <div class="container_projects">
 
 
-    <div class="carusel_item">
+    <div class="project_item">
       <img src="img\avail.webp" alt="">
-      <h3 class="name">Avail</h3>
+      <h3 class="name">AVAIL</h3>
       <div class="button">Stake</div>
     </div>
 
 
-    <div class="carusel_item">
+    <div class="project_item">
       <img src="img\streamr.webp" alt="">
-      <h3 class="name">Streamr</h3>
+      <h3 class="name">STREAMR</h3>
       <div class="button">Stake</div>
     </div>
 
 
-    <div class="carusel_item">
+    <div class="project_item">
       <img src="img\warden.webp" alt="">
-      <h3 class="name">Warden</h3>
+      <h3 class="name">WARDEN</h3>
       <div class="button">Stake</div>
     </div>
 
 
-    <div class="carusel_item">
+    <div class="project_item">
       <img src="img\side.webp" alt="">
-      <h3 class="name">Side</h3>
+      <h3 class="name">SIDE</h3>
       <div class="button">Stake</div>
     </div>
 
-
-
-  </div>
-
-
-  <div class="window">
-    <div class="bar">
-      <div class="btn"></div>
-    </div>
-    <div class="body">
-      <pre><div class="comment"># run this command:</div><div class="prompt">$ <span class="command">echo hi</span></div><div class="prompt">hi</div><div class="prompt">$ <span class="pulse">_</span></div></pre>
-    </div>
   </div>
 
   <footer>
-    <img src="" />
+    <img src=""/>
   </footer>
   <!-- partial -->
 
 </body>
 
-<!-- Displaying the appearance of elements from bottom to top "carusel_item" -->
+<!-- Displaying the appearance of elements from bottom to top "project_item" -->
 <script>
   anime({
-    targets: '.carusel_item',
-    translateY: [100, 0],
+    targets: '.project_item',
+    translateY: [-100, 0],
     opacity: [0, 1],
     delay: anime.stagger(100),
     easing: 'easeOutExpo',
-    duration: 200
+    duration: 400
   });
 </script>
+
+<!-- Displaying the like 3d flip loop animation with pause to "h2" -->
+<script>
+  anime({
+    targets: 'h2',
+    rotateX: '360deg',
+    loop: true,
+    direction: 'alternate',
+    easing: 'easeInOutSine',
+    duration: 500,
+    delay: 1500
+  });
+</script>
+
 
 </html>
