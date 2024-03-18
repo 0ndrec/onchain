@@ -2,6 +2,7 @@
 **Step-by-Step Tutorial for Setting Up a Validator on Warden Protocol's Alfama Testnet**
 
 **Part 1. Preparing an Environment: Update Packages**
+
 Before diving into the specifics of joining the Alfama testnet or creating a validator, it's crucial to prepare your environment, particularly if you are using a remote Ubuntu server. The first step is to update the package lists for upgrades for packages that need upgrading, as well as new package versions.
 
 - Open your terminal and connect to your remote Ubuntu server.
