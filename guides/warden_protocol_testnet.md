@@ -1,86 +1,55 @@
 
-# Руководство по установке и созданию валидатора на Alfama Testnet
+**Step-by-Step Tutorial for Setting Up a Validator on Warden Protocol's Alfama Testnet**
 
-## Часть первая: Установка GoLang и загрузка репозитория
+**Part 1. Preparing an Environment: Update Packages**
+Before diving into the specifics of joining the Alfama testnet or creating a validator, it's crucial to prepare your environment, particularly if you are using a remote Ubuntu server. The first step is to update the package lists for upgrades for packages that need upgrading, as well as new package versions.
 
-### Установка инструментов сборки
-1. Установите Go, следуя инструкциям на официальном сайте [https://golang.org/doc/install](https://golang.org/doc/install).
+- Open your terminal and connect to your remote Ubuntu server.
+- Run the following commands:
+  ```bash
+  sudo apt update       # Fetches the list of available updates
+  sudo apt upgrade -y   # Installs some updates; -y flag means "yes" to prompts
+  ```
 
-### Скачивание и настройка бинарного файла warden
-1. Клонируйте репозиторий Warden Protocol версии v0.1.0:
-   ```
+**Part 2. Joining the Alfama Testnet**
+
+1. **Hardware Recommendations**: Ensure your machine has at least 8 cores, 32GB of RAM, and 300GB of disk space for running public testnet nodes efficiently.
+
+2. **Build Tools Installation**:
+   - Install Go by following the instructions on the [official Go website](https://golang.org/doc/install).
+
+3. **Installation & Configuration**:
+   - Install and configure the Warden binary. Start by cloning the Warden Protocol repository and building the `wardend` binary. Initialize the chain home folder with your custom moniker and prepare the genesis file.
+   ```bash
    git clone --depth 1 --branch v0.1.0 https://github.com/warden-protocol/wardenprotocol/
-   ```
-2. Перейдите в директорию `wardenprotocol/warden/cmd/wardend` и соберите бинарный файл:
-   ```
+   cd wardenprotocol/warden/cmd/wardend
    go build
-   ```
-3. Переместите `wardend` в `/usr/local/bin/`:
-   ```
    sudo mv wardend /usr/local/bin/
-   ```
-4. Инициализируйте каталог данных ноды:
-   ```
    wardend init <custom_moniker>
    ```
+   Prepare the genesis file by downloading it to the correct directory and setting up the minimum gas prices and peers.
 
-### Подготовка файла genesis
-1. Перейдите в каталог конфигурации `.warden/config`.
-2. Удалите существующий файл genesis.json:
-   ```
-   rm genesis.json
-   ```
-3. Скачайте новый файл genesis:
-   ```
-   wget https://raw.githubusercontent.com/warden-protocol/networks/main/testnet-alfama/genesis.json
-   ```
-4. Установите минимальную цену газа и укажите постоянные пиры:
-   [Инструкции по настройке].
+4. **(Optional) Setup State Sync**:
+   - To speed up the initial sync, consider using the state sync feature by setting up a list of trusted RPC endpoints, a trusted block height, and its corresponding block hash.
 
-## Часть вторая: Создание валидатора
+5. **Start the Node**:
+   - Start your node with the `wardend start` command, connecting to the persistent peers and beginning to download blocks.
 
-### Создание или восстановление локального кошелька
-1. Создайте новую пару ключей или восстановите существующий кошелек для вашего валидатора:
-   ```
-   wardend keys add <key-name>
-   ```
-   или для восстановления:
-   ```
-   wardend keys add <key-name> --recover
-   ```
-2. Просмотрите ваш публичный адрес:
-   ```
-   wardend keys show <key-name> -a
-   ```
+**Part 3. Creating a Validator**
 
-### Получение тестовых токенов WARD
-1. Получите тестовые токены, чтобы финансировать ваш адрес:
-   ```
-   curl --json '{"address": "<your-address>"}' https://faucet.alfama.wardenprotocol.org
-   ```
-2. Проверьте баланс:
-   ```
-   wardend query bank balances <key-name>
-   ```
+1. **Prerequisites**: Ensure you have set up a full node and synchronized it to the latest block height following the instructions in Part 2.
 
-### Создание нового валидатора
-1. Получите публичный ключ вашего валидатора:
-   ```
-   wardend comet show-validator
-   ```
-2. Создайте файл `validator.json` с необходимыми данными и параметрами вашего валидатора.
-3. Отправьте транзакцию для создания валидатора:
-   ```
-   wardend tx staking create-validator validator.json --from=<key-name> --chain-id=alfama --fees=500uward
-   ```
+2. **Create or Restore a Local Wallet Key Pair**:
+   - Generate a new key pair for your validator or restore an existing wallet. Securely store the seed phrase provided.
 
-### Резервное копирование критически важных файлов
-1. Создайте зашифрованную резервную копию файлов `priv_validator_key.json` и `node_key.json`.
+3. **Get Testnet WARD**:
+   - Obtain testnet WARD tokens from the faucet to fund your new address. This is necessary for submitting transactions, including the one to create your validator.
 
-### Проверка активного статуса валидатора
-1. Проверьте, входит ли ваш валидатор в активный набор:
-   ```
-   wardend query comet-validator-set | grep "$(wardend comet show-address)"
-   ```
+4. **Create a New Validator**:
+   - Create a validator by submitting a `create-validator` transaction. This requires setting up a `validator.json` file with your validator's public key, moniker, and other details. Finally, submit the transaction with the `wardend tx staking create-validator` command.
 
-Важно следить за актуальностью информации на официальном сайте и в документации Warden Protocol, так как параметры и процедуры могут изменяться.
+5. **Backup Critical Files**:
+   - It's crucial to backup certain files like `priv_validator_key.json` and `node_key.json` to ensure you can restore your validator if needed.
+
+6. **Confirm Your Validator is in the Active Set**:
+   - Verify if your validator has been successfully added to the active set by checking the validator set for your validator's address.
