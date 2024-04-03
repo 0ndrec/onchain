@@ -78,6 +78,8 @@ p {
   height: 2.5rem;
   align-items: center;
   margin-bottom: 2rem;
+  padding-left: 12rem;
+  padding-right: 12rem;
 }
 
 .navbar a {
