@@ -32,7 +32,32 @@ sudo adduser <username>
 sudo usermod -aG sudo <username>
 ```
 
-## Шаг 4: Настройка SSH
+
+## Шаг 4: Настройка аутентификации по ключам SSH
+
+Генерация ключей и их копирование на сервер:
+
+```bash
+c:\> ssh user@lnxhost "umask 077; test -d .ssh || mkdir .ssh ; cat >> .ssh/authorized_keys || exit 1" < \\path_to_where_the_file_was_generated_from_ssh_key_gen\id_rsa.pub
+```
+С Linux машины:
+
+```bash
+ssh-keygen
+ssh-copy-id <username>@<server-ip>
+```
+
+## Шаг 5: Установка и настройка fail2ban
+
+Установка и активация fail2ban:
+
+```bash
+sudo apt install fail2ban -y
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+```
+
+## Шаг 6: Настройка SSH
 
 Измените конфигурацию SSH для увеличения безопасности:
 
@@ -49,33 +74,7 @@ sudo nano /etc/ssh/sshd_config
 sudo systemctl restart sshd
 ```
 
-## Шаг 5: Настройка аутентификации по ключам SSH
-
-Генерация ключей и их копирование на сервер:
-
-```bash
-ssh-keygen
-ssh-copy-id <username>@<server-ip>
-```
-
-## Шаг 6: Установка и настройка fail2ban
-
-Установка и активация fail2ban:
-
-```bash
-sudo apt install fail2ban -y
-sudo systemctl enable fail2ban
-sudo systemctl start fail2ban
-```
-
 ## Шаг 7: Планирование резервного копирования
 
 Настройте резервное копирование с использованием rsync или других инструментов.
 
-## Шаг 8: Регулярное мониторинг и обновление
-
-Мониторинг системы и регулярные обновления:
-
-```bash
-sudo apt update && sudo apt upgrade -y
-```
