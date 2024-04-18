@@ -35,7 +35,8 @@ sudo usermod -aG sudo <username>
 
 Для windows пользователей:
 
-```ssh-keygen
+```bash
+ssh-keygen
 ```
 
 ## Шаг 4: Настройка SSH
