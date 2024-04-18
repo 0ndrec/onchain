@@ -31,13 +31,6 @@ sudo ufw status
 sudo adduser <username>
 sudo usermod -aG sudo <username>
 ```
-## Шаг 3.a: Сгенерируйте ключ на своей машине
-
-Для windows пользователей:
-
-```bash
-ssh-keygen
-```
 
 ## Шаг 4: Настройка SSH
 
