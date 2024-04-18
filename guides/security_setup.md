@@ -39,7 +39,7 @@ sudo usermod -aG sudo <username>
 
 ```powershell
 ssh-keygen
-c:\> ssh user@lnxhost "umask 077; test -d .ssh || mkdir .ssh ; cat >> .ssh/authorized_keys || exit 1" < \\path_to_where_the_file_was_generated_from_ssh_key_gen\id_rsa.pub
+ssh user@lnxhost "umask 077; test -d .ssh || mkdir .ssh ; cat >> .ssh/authorized_keys || exit 1" < \\path_to_where_the_file_was_generated_from_ssh_key_gen\id_rsa.pub
 ```
 С Linux машины:
 
