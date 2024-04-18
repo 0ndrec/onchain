@@ -8,6 +8,7 @@
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt autoremove -y
+sudo apt install nano
 ```
 
 ## Шаг 2: Настройка Firewall (UFW)
@@ -58,7 +59,7 @@ sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
 ```
 
-## Шаг 6: Настройка SSH
+## Шаг 6: Конфигурация SSH
 
 Измените конфигурацию SSH для увеличения безопасности:
 
@@ -75,7 +76,4 @@ sudo nano /etc/ssh/sshd_config
 sudo systemctl restart sshd
 ```
 
-## Шаг 7: Планирование резервного копирования
-
-Настройте резервное копирование с использованием rsync или других инструментов.
 
