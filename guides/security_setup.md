@@ -29,7 +29,7 @@ sudo ufw status
 Создание пользователя и добавление его в группу sudo:
 
 ```bash
-sudo adduser <username>
+sudo adduser <username> --disabled-password -q
 sudo usermod -aG sudo <username>
 ```
 
