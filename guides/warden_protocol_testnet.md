@@ -79,7 +79,7 @@ Warden Protocol представляет собой модульную инфр�
    ```
    wardend keys import <your-validator-name> <path-to-your-key-file>
    ```
-   или (импорт с помощью мнемоники):
+   или (восстановление с помощью мнемоники):
    ```
    wardend keys add <your-validator-name> --recover
    ```
