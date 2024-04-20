@@ -79,6 +79,10 @@ Warden Protocol представляет собой модульную инфр�
    ```
    wardend keys import <your-validator-name> <path-to-your-key-file>
    ```
+   или (импорт с помощью мнемоники):
+   ```
+   wardend keys add <your-validator-name> --recover
+   ```
 3. **Запросите тестовые токены**:
    ```
    curl -XPOST -d '{"address": "<your-address>"}' https://faucet.buenavista.wardenprotocol.org
