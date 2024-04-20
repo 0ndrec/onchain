@@ -159,6 +159,11 @@ wardend init --chain-id=buenavista-1 --moniker="<your-node-name>" --validator-ke
    ```
    journalctl -u wardend -f
    ```
+   
+3. **Если валидатор в статусе "Jailed"**:
+   ```
+   wardend tx slashing unjail --from <your-validator-key-name> --chain-id buenavista-1 --gas-prices 0.01uward --gas-adjustment 1.5 --gas auto -y
+   ```
 
 #### ⭐ Важные замечания
 - Регулярно обновляйте программное обеспечение узла, чтобы обеспечить совместимость с текущими требованиями сети.
