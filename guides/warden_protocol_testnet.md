@@ -55,13 +55,30 @@ Warden Protocol представляет собой модульную инфр�
    sed -i -e 's|^seeds *=.*|seeds = "ddb4d92ab6eba8363bab2f3a0d7fa7a970ae437f@sentry-1.buenavista.wardenprotocol.org:26656,c717995fd56dcf0056ed835e489788af4ffd8fe8@sentry-2.buenavista.wardenprotocol.org:26656,e1c61de5d437f35a715ac94b88ec62c482edc166@sentry-3.buenavista.wardenprotocol.org:26656"|' $HOME/.warden/config/config.toml
    sed -i -e 's|^minimum-gas-prices *=.*|minimum-gas-prices = "0.01uward"|' $HOME/.warden/config/app.toml
    ```
-
-5. **Запуск и мониторинг узла**:
+5. **Создание сервиса-демона для автозапуска**:
+   ```
+   sudo tee /etc/systemd/system/wardend.service > /dev/null <<EOF
+   [Unit]
+   Description=Warden
+   After=network-online.target
+   [Service]
+   User=$USER
+   WorkingDirectory=$HOME/.warden
+   ExecStart=$(which wardend) start --home $HOME/.warden
+   Restart=on-failure
+   RestartSec=5
+   LimitNOFILE=65535
+   [Install]
+   WantedBy=multi-user.target
+   EOF
+   ```
+   
+6. **Запуск и мониторинг узла**:
    ```
    sudo systemctl start wardend.service
    sudo journalctl -u wardend.service -f --no-hostname -o cat
    ```
-6. **В Discord сообществе можно запросить ссылки на снепшоты**:
+7. **В Discord сообществе можно запросить ссылки на снепшоты**:
    https://discord.gg/NaJGzPkH
 
 ### Убедитесь, что ваш узел синхронизирован с сетью, прежде чем регистрировать валидатора!
