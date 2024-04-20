@@ -42,6 +42,7 @@ Warden Protocol представляет собой модульную инфр�
    wardend config client node tcp://localhost:26657
    wardend init "Your Node Name" --chain-id buenavista-1
    ```
+   Доп. информация о keyring: https://docs.cosmos.network/v0.45/run-node/keyring.html
 
 3. **Настройка файлов начальной загрузки и конфигурации**:
    ```
