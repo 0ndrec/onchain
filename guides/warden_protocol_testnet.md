@@ -44,7 +44,7 @@ Warden Protocol представляет собой модульную инфр�
    ```
    Доп. информация о keyring: https://docs.cosmos.network/v0.45/run-node/keyring.html
 
-3. **Настройка файлов начальной загрузки и конфигурации**:
+3. **Настройка файлов начальной загрузки и конфигурации** (источник: NODEJUMPER):
    ```
    curl -L https://snapshots-testnet.nodejumper.io/wardenprotocol-testnet/genesis.json > $HOME/.warden/config/genesis.json
    curl -L https://snapshots-testnet.nodejumper.io/wardenprotocol-testnet/addrbook.json > $HOME/.warden/config/addrbook.json
