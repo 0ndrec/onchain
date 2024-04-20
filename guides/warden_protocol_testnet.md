@@ -49,18 +49,18 @@ Warden Protocol представляет собой модульную инфр�
    curl -L https://snapshots-testnet.nodejumper.io/wardenprotocol-testnet/addrbook.json > $HOME/.warden/config/addrbook.json
    ```
 
-   **Настройка сидов и минимальной цены газа:
+4. **Настройка сидов и минимальной цены газа:
    ```
    sed -i -e 's|^seeds *=.*|seeds = "ddb4d92ab6eba8363bab2f3a0d7fa7a970ae437f@sentry-1.buenavista.wardenprotocol.org:26656,c717995fd56dcf0056ed835e489788af4ffd8fe8@sentry-2.buenavista.wardenprotocol.org:26656,e1c61de5d437f35a715ac94b88ec62c482edc166@sentry-3.buenavista.wardenprotocol.org:26656"|' $HOME/.warden/config/config.toml
    sed -i -e 's|^minimum-gas-prices *=.*|minimum-gas-prices = "0.01uward"|' $HOME/.warden/config/app.toml
    ```
 
-4. **Запуск и мониторинг узла**:
+5. **Запуск и мониторинг узла**:
    ```
    sudo systemctl start wardend.service
    sudo journalctl -u wardend.service -f --no-hostname -o cat
    ```
-5. **В Discord сообществе можно запросить ссылки на снепшоты**:
+6. **В Discord сообществе можно запросить ссылки на снепшоты**:
    https://discord.gg/NaJGzPkH
 
 ** Убедитесь, что ваш узел синхронизирован с сетью, прежде чем регистрировать валидатора!
