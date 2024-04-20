@@ -37,9 +37,9 @@ Warden Protocol представляет собой модульную инфр�
 
 2. **Конфигурация клиента и инициализация узла**:
    ```
-   wardend config set client chain-id buenavista-1
-   wardend config set client keyring-backend test
-   wardend config set client node tcp://localhost:26657
+   wardend config keyring-backend os
+   wardend config chain-id buenavista-1
+   wardend config client node tcp://localhost:26657
    wardend init "Your Node Name" --chain-id buenavista-1
    ```
 
