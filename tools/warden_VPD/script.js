@@ -70,10 +70,13 @@ async function displayValidators() {
     const blockHeight = await fetchBlockHeight();
     const votingPowers = await fetchVotingPower(blockHeight);
 
+    displayLoadingPopup(false);
+
+
     // Sort the validators by voting power in descending order
     const sortedValidators = validators.slice().sort((a, b) => {
-        const ap = votingPowers.find(vp => vp.pub_key.key === a.consensus_pubkey.key).voting_power;
-        const bp = votingPowers.find(vp => vp.pub_key.key === b.consensus_pubkey.key).voting_power;
+        const ap = votingPowers.find(vp => vp.pub_key.key === a.consensus_pubkey.key)?.voting_power || 0;
+        const bp = votingPowers.find(vp => vp.pub_key.key === b.consensus_pubkey.key)?.voting_power || 0;
         return bp - ap;
     });
 
