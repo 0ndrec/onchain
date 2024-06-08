@@ -25,7 +25,7 @@ h1 {
 
 
 .header {
-  font-family: "Pixelify Sans", sans-serif !important;
+  font-family: "Silkscreen", sans-serif !important;
   justify-content: center;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@ p {
 }
 
 .container_navbar {
-  font-family: "Pixelify Sans", sans-serif !important;
+  font-family: "Silkscreen", sans-serif !important;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
@@ -149,7 +149,7 @@ p {
 }
 
 .project_item .button {
-  font-family: "Pixelify Sans", sans-serif !important;
+  font-family: "Silkscreen", sans-serif !important;
   border-bottom: #32c146 2px solid;
   text-transform: uppercase;
   background: #232323;
