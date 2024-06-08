@@ -221,7 +221,7 @@ p {
   
   
   h1 {
-    font-size: calc(3vw + 3.5vh + 2vmin);
+    font-size: calc(3vw + 2.5vh + 2vmin);
     text-overflow: ellipsis;
     text-align: center;
     letter-spacing: 0.3rem;
