@@ -15,7 +15,7 @@ body {
 
 h1 {
   color: #ffffff;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 500;
   text-align: center;
   letter-spacing: 0.3rem;
@@ -51,6 +51,7 @@ footer img {
 h2 {
   color: #ffffff;
   font-size: 1.5rem;
+  font-weight: 500;
   text-align: center;
   letter-spacing: 0.4rem;
   text-transform: uppercase;
