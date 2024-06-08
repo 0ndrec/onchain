@@ -240,14 +240,13 @@ p {
 
   .navbar {
     padding-top: 4rem;
-    justify-content: space-evenly;
-    overflow-x: scroll;
+    justify-content: center;
     padding-left: 2rem;
     padding-right: 2rem;
   }
 
   .navbar a {
-    font-size: calc(1.3vw + 1.3vh + 2vmin);
+    font-size: calc(1.3vw + 1vh + 2vmin);
     margin-left: 3px;
     margin-right: 3px;
     padding: 0.5rem 1.2rem;
