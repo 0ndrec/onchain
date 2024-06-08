@@ -241,7 +241,7 @@ p {
   .navbar {
     padding-top: 4rem;
     justify-content: space-evenly;
-    overflow: scroll;
+    overflow-x: scroll;
     padding-left: 2rem;
     padding-right: 2rem;
   }
