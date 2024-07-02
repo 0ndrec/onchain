@@ -2,13 +2,13 @@
 
 print_intro() {
     echo "════════════════════════════════════════════════════════════"
-    echo "║       Welcome to Allora-Worker B0T!!                     ║"
+    echo "║       Welcome to allora_worker autoinstall!!             ║"
     echo "║                                                          ║"
-    echo "║     Follow us on Twitter:                                ║"
-    echo "║     https://twitter.com/cipher_airdrop                   ║"
+    echo "║     Visit a site:                                        ║"
+    echo "║     - https://onchain.run/                               ║"
     echo "║                                                          ║"
-    echo "║     Join us on Telegram:                                 ║"
-    echo "║     - https://t.me/+tFmYJSANTD81MzE1                     ║"
+    echo "║     CryptoFortochka:                                     ║"
+    echo "║     - https://t.me/fortochat                             ║"
     echo "╚════════════════════════════════════════════════════════════"
     read -p 'Will you Continue? (Y/N): ' answer
     if [ "$answer" != "Y" ] && [ "$answer" != "y" ]; then
