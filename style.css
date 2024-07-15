@@ -4,11 +4,9 @@ body {
   line-height: 1.5;
   padding-top: 2rem;
 
-  font-family: "Geo", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  /* font-family: "Pixelify Sans", sans-serif; */
+  font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
+  font-style: normal;
 }
 
 
@@ -131,50 +129,116 @@ p {
   margin: 0 0.5rem;
 }
 
-.container_projects {
-  flex-direction: row;
-  display: flex;
+
+.container_chains {
+  /* Add x-scroll */
+  overflow-x: auto;
+  justify-content: space-around;
+  padding: 1rem;
+  margin-inline: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   align-items: center;
   margin-bottom: 2rem;
   gap: 1rem;
-  justify-content: center;
 }
 
-
-.project_item {
-  border-top: #32c146 2px solid;
+/* Mainnet section */
+.container_chains .mainnet {
   display: flex;
+  white-space: nowrap;
+  width: calc(100% - 2rem);
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+  padding-inline: 1rem;
 }
 
-.project_item .button {
-  font-family: "Silkscreen", sans-serif !important;
-  border-bottom: #32c146 2px solid;
-  text-transform: uppercase;
-  background: #232323;
-  padding: 0.5rem 1rem;
-  color: #f6b73e;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-
-.project_item img {
-  width: 80px;
-  height: auto;
-  margin: 0 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.project h4 {
-  color: hsl(0, 0%, 100%);
+.container_chains .mainnet h3 {
+  font-size: 1.5rem;
+  font-weight: 300;
   text-align: center;
 }
+
+
+.container_chains .mainnet .block_height .value{
+  font-size: 1.5rem;
+  color: #32c146;
+  font-family: "Silkscreen", sans-serif !important;
+  margin-top: 0%;
+}
+
+.container_chains .mainnet .block_height .title{
+  font-size: 0.75rem;
+  color: #32c146;
+  font-family: "Silkscreen", sans-serif !important;
+  margin-bottom: 0%;
+}
+
+.container_chains .mainnet .endpoints {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.container_chains .mainnet .endpoints .button a{
+  background: #232323;
+  color: #32c146;
+  color: #f6b73e;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+
+/* Testnet section */
+.container_chains .testnet {
+  display: flex;
+  white-space: nowrap;
+  width: calc(100% - 2rem);
+  flex-direction: column;
+  padding-inline: 1rem;
+}
+
+.container_chains .testnet h3 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+
+.container_chains .testnet .block_height .value{
+  font-size: 1.5rem;
+  color: #32c146;
+  font-family: "Silkscreen", sans-serif !important;
+  margin-top: 0%;
+}
+
+.container_chains .testnet .block_height .title{
+  font-size: 0.75rem;
+  color: #32c146;
+  font-family: "Silkscreen", sans-serif !important;
+  margin-bottom: 0%;
+}
+
+.container_chains .testnet .endpoints {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+
+
+.container_chains .testnet .endpoints .button a{
+  background: #232323;
+  color: #32c146;
+  color: #f6b73e;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+
+
+
+
 
 /* Hover effects for a navigation */
 .navbar a:hover {
@@ -301,35 +365,4 @@ p {
     height: auto;
   }
 
-  .project_item {
-    border: none;
-    width: 90%;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: inherit;
-  }
-  .container_projects {
-    border-bottom: #32c146 2px dashed;
-    border-top: #32c146 2px dashed;
-    font-size: calc(1.3vw + 1.3vh + 2vmin);
-    flex-direction: column;
-  }
-  .project_item .button {
-    border-bottom: none;
-    border-top: #32c146 2px solid;
-    text-transform: uppercase;
-    background: #232323;
-    padding: 0.5rem 1rem;
-    color: #f6b73e;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  .project_item img {
-    width: calc(2vw + 5vh + 2vmin);
-    height: auto;
-    margin: 0 0.5rem;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
 }

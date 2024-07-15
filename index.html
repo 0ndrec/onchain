@@ -6,11 +6,11 @@
   <title>ONCHAIN.RU - Trusted PoS Validator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geo:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="./style.css">
-  <script src="blockheight.js"></script>
-  <script src="anime.min.js"></script>
+  <script src="onchaindata.js"></script>
 </head>
 
 <body>
@@ -36,53 +36,13 @@
   </h3>
   <div class="container_hero">
     <h4>
-      Our team of blockchain validators leverages cutting-edge hardware to ensure maximum uptime, delivering unparalleled network reliability and performance. We proactively monitor drive wear. Trust us to maintain the highest standards of efficiency and security for your blockchain needs.
+      Creating custom infrastructure solutions, our services are meticulously tailored to meet diverse blockchain needs, driving growth and innovation within the ecosystem.
     </h4>
     <div class="hero">
       <img src="img\cpu.webp" alt="">
     </div>
   </div>
   
-
-  <div class="container_projects">
-
-
-    <div class="project_item">
-      <img src="img\avail.webp" alt="">
-      <h3 class="name">AVAIL</h3>
-      <div class="button">Stake</div>
-    </div>
-
-
-    <div class="project_item">
-      <img src="img\streamr.webp" alt="">
-      <h3 class="name">STREAMR</h3>
-      <div class="button">Stake</div>
-    </div>
-
-
-    <div class="project_item">
-      <img src="img\warden.webp" alt="">
-      <h3 class="name">WARDEN</h3>
-      <div id="block_height"></div>
-      <div class="button">Stake</div>
-    </div>
-
-    <div class="project_item">
-      <img src="img\0G.webp" alt="">
-      <h3 class="name">0G</h3>
-      <div class="button">Stake</div>
-    </div>
-
-    <div class="project_item">
-      <img src="img\side.webp" alt="">
-      <h3 class="name">SIDE</h3>
-      <div class="button">Stake</div>
-    </div>
-
-  </div>
-
-
   <h3 class="caption">
     Let's grow together
   </h3>
@@ -91,9 +51,19 @@
       <img src="img\comm.webp" alt="">
     </div>
     <h4>
-      Is your project interested in attracting an audience? Or are you looking for talent in the field of content creation? We also offer unparalleled access to deeply engaged communities in blockchain and Web3, with large Telegram and Twitter groups at our disposal. Our platforms are ideal for promoting projects and connecting with a dedicated audience keen on innovation in this space. Join us to elevate your project's visibility and reach passionate enthusiasts today.
+      Interested in attracting an audience? Or are you looking for talent in the field of content creation? We also offer unparalleled access to deeply engaged communities in blockchain and Web3, with large Telegram and Twitter groups at our disposal. Our platforms are ideal for promoting projects and connecting with a dedicated audience keen on innovation in this space. Join us to elevate your project's visibility and reach passionate enthusiasts today.
     </h4>
   </div>
+
+  <div class="container_chains">
+    <script>
+      generateDivs(testnet_config_files, 'testnet', '.container_chains');
+      generateDivs(mainnet_config_files, 'mainnet', '.container_chains');
+    </script>
+  </div>
+
+
+  
 
   <footer>
     <img src=""/>
@@ -106,7 +76,7 @@
   // Auto scroll page by presing the button services to down maximum
   document.querySelector('.navbar a').addEventListener('click', function (e) {
     e.preventDefault();
-    document.querySelector('.container_info').scrollIntoView({
+    document.querySelector('.container_chains').scrollIntoView({
       behavior: 'smooth'
     });
   });
@@ -131,31 +101,6 @@
       window.open(projects_dict[button.parentElement.querySelector('.name').textContent]);
     });
   });
-</script>
-
-<!-- Displaying the animation endless running strip from right to lest "h2" -->
-<script>
-  const textWrapper = document.querySelector('.header h2');
-  textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-  anime.timeline({
-      loop: true
-    })
-    .add({
-      targets: '.header h2 .letter',
-      translateX: [40, 0],
-      translateZ: 0,
-      opacity: [0, 1],
-      easing: "easeOutExpo",
-      duration: 1200,
-      delay: (el, i) => 500 + 30 * i
-    }).add({
-      targets: '.header h2 .letter',
-      translateX: [0, -30],
-      opacity: [1, 0],
-      easing: "easeInExpo",
-      duration: 1100,
-      delay: (el, i) => 100 + 30 * i
-    });
 </script>
 
 
