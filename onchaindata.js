@@ -2,6 +2,7 @@
 const testnet_config_files = [
     'wardenprotocol.json',
     'crossfi.json',
+    'allora.json',
 ];
 
 const mainnet_config_files = [
