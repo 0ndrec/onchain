@@ -295,7 +295,10 @@ do_install() {
 				exec_cmd "apt-get update -qq > $DEVNULL"
 			)
 			echo "Installing Sonaric..."
-			exec_cmd "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq sonaric > $DEVNULL"
+
+      # Sub-process /usr/bin/dpkg returned an error code (1)
+
+			exec_cmd "DEBIAN_FRONTEND=noninteractive apt-get install -y -qq sonaric"
 			;;
 		centos|fedora|rhel|rocky)
 		  # use dnf for fedora or rocky linux, yum for centos or rhel
@@ -309,7 +312,7 @@ do_install() {
 
 			(
 				echo "Installing dnf dependencies..."
-				exec_cmd "$pkg_manager install -y -q $pre_reqs > $DEVNULL"
+				exec_cmd "$pkg_manager install -y -q $pre_reqs"
 				echo "Configuring yum repository..."
 				exec_cmd "echo \"[sonaric-releases-rpm]
 name=sonaric-releases-rpm
@@ -320,12 +323,12 @@ gpgcheck=0\" > /etc/yum.repos.d/artifact-registry.repo"
 
         # Enable the repository
 				echo "Updating yum..."
-				exec_cmd "$pkg_manager makecache > $DEVNULL"
+				exec_cmd "$pkg_manager makecache"
 			)
 			(
 				pkgs="sonaricd sonaric"
 				echo "Installing Sonaric..."
-				exec_cmd "$pkg_manager install -y -q $pkgs > $DEVNULL"
+				exec_cmd "$pkg_manager install -y -q $pkgs"
 			)
 			;;
 		*)
