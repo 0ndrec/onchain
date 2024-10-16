@@ -158,19 +158,19 @@ services:
       PRIVATE_KEY: '$PRIVATE_KEY'
       RPCS: '{
   "1": {
-    "rpc": "ТВОЯ rpc alchemy ИЛИ infura",
+    "rpc": "https://lb.drpc.org/ogrpc?network=ethereum&dkey=Al9kmUzNfEJWvdbysdd0NVurKSsxezYR75BdhlDYfw4q",
     "chainId": 1,
     "network": "mainnet",
     "chunkSize": 100
   },
   "10": {
-    "rpc": "ТВОЯ rpc alchemy ИЛИ infura",
+    "rpc": "https://lb.drpc.org/ogrpc?network=optimism&dkey=Al9kmUzNfEJWvdbysdd0NVurKSsxezYR75BdhlDYfw4q",
     "chainId": 10,
     "network": "optimism",
     "chunkSize": 100
   },
   "137": {
-    "rpc": "ТВОЯ rpc alchemy ИЛИ infura",
+    "rpc": "https://lb.drpc.org/ogrpc?network=polygon&dkey=Al9kmUzNfEJWvdbysdd0NVurKSsxezYR75BdhlDYfw4q",
     "chainId": 137,
     "network": "polygon",
     "chunkSize": 100
@@ -189,13 +189,13 @@ services:
     "chunkSize": 100
   },
   "11155111": {
-    "rpc": "ТВОЯ rpc alchemy ИЛИ infura",
+    "rpc": "https://lb.drpc.org/ogrpc?network=sepolia&dkey=Al9kmUzNfEJWvdbysdd0NVurKSsxezYR75BdhlDYfw4q",
     "chainId": 11155111,
     "network": "sepolia",
     "chunkSize": 100
   },
   "11155420": {
-    "rpc": "ТВОЯ rpc alchemy ИЛИ infura",
+    "rpc": "https://lb.drpc.org/ogrpc?network=optimism-sepolia&dkey=Al9kmUzNfEJWvdbysdd0NVurKSsxezYR75BdhlDYfw4q",
     "chainId": 11155420,
     "network": "optimism-sepolia",
     "chunkSize": 100
