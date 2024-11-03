@@ -1,5 +1,5 @@
 
-const API_BASE_URL = "https://api.buenavista.wardenprotocol.org";
+const API_BASE_URL = "https://api.chiado.wardenprotocol.org";
 const validatorsContainer = document.getElementById('validators-container');
 const blockHeightDisplay = document.getElementById('current-block-height');
 const qValidatorsDisplay = document.getElementById('current-q-validators');
