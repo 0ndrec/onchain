@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status</title>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: #12181e;
+            color: #fff;
+        }
+        .container {
+            background-color: #12181e;
+            color: #fff;
+            border-radius: 5px;
+        }
+        #metricsChart {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        .error {
+            color: red;
+        }
+        .accent {
+            color: #32c146;
+        }
+        h1 {
+            font-family: "Silkscreen";
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Status Monitor</h1>
+        <div class="row">
+            <div class="six columns">
+                <label for="sourceSelector">Select chain:</label>
+                <select id="sourceSelector" class="u-full-width">
+                    <option value="http://152.53.16.185:9090">Allora Testnet</option>
+                    <option value="http://example.com:9090">Unknown</option>
+                </select>
+            </div>
+            <div class="six columns">
+                <label for="metricSelector">Select Metric:</label>
+                <select id="metricSelector" class="u-full-width">
+                    <option value="">-- Select Metric --</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                <label for="timeframe">Set Timeframe (Number of Points):</label>
+                <select id="timeframe" class="u-full-width">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <div class="six columns">
+                <label for="updateInterval">Set Update Interval:</label>
+                <select id="updateInterval" class="u-full-width">
+                    <option value="2000">2 seconds</option>
+                    <option value="30000">30 seconds</option>
+                    <option value="300000">5 minutes</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                <button id="fetchMetrics" class="button-primary accent">Fetch Metrics</button>
+            </div>
+            <div class="six columns">
+                <button id="stopAutoUpdate" class="button accent">Stop Auto-Update</button>
+            </div>
+        </div>
+        <p id="error" class="error"></p>
+
+        <canvas id="metricsChart" width="1200" height="600"></canvas>
+    </div>
+
+    <script>
+        const errorElement = document.getElementById('error');
+        const metricsChartElement = document.getElementById('metricsChart');
+        const metricSelector = document.getElementById('metricSelector');
+        const timeframeInput = document.getElementById('timeframe');
+        const updateIntervalInput = document.getElementById('updateInterval');
+        let metricsChart = null;
+        let intervalId = null;
+
+        // Initialize the chart
+        function initChart() {
+            const ctx = metricsChartElement.getContext('2d');
+            metricsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Metric Values',
+                        data: [],
+                        borderColor: '#32c146',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        pointBorderColor: '#32c146',
+                        pointBackgroundColor: '#32c146',
+                        pointBorderWidth: 5,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        x: { title: { display: false, text: 'Timestamp' } },
+                        y: { title: { display: false, text: 'Value' } }
+                    }
+                },
+            });
+        }
+
+        // Fetch all available metrics
+        async function fetchAvailableMetrics() {
+            const source = document.getElementById('sourceSelector').value;
+            const queryUrl = `${source}/api/v1/label/__name__/values`;
+
+            try {
+                const response = await fetch(queryUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.status !== 'success') {
+                    throw new Error('Failed to fetch available metrics.');
+                }
+
+                populateMetricSelector(data.data);
+            } catch (error) {
+                errorElement.textContent = `Error fetching metrics list: ${error.message}`;
+            }
+        }
+
+        // Populate the metric selector
+        function populateMetricSelector(metrics) {
+            metricSelector.innerHTML = '<option value="">-- Select Metric --</option>';
+            metrics.forEach(metric => {
+                const option = document.createElement('option');
+                option.value = metric;
+                option.textContent = metric;
+                metricSelector.appendChild(option);
+            });
+        }
+
+        // Fetch metrics from Prometheus
+        async function fetchMetrics() {
+            const source = document.getElementById('sourceSelector').value;
+            const metric = metricSelector.value || 'cometbft_consensus_height';
+
+            if (!metric) {
+                errorElement.textContent = 'Please select a metric.';
+                return;
+            }
+
+            const queryUrl = `${source}/api/v1/query?query=${encodeURIComponent(metric)}`;
+
+            errorElement.textContent = ''; // Clear previous errors
+
+            try {
+                const response = await fetch(queryUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.status !== 'success') {
+                    throw new Error('Query failed: ' + (data.error || 'Unknown error'));
+                }
+
+                updateLiveChart(data.data.result);
+            } catch (error) {
+                errorElement.textContent = `Error fetching data: ${error.message}`;
+                stopAutoUpdate();
+            }
+        }
+
+        // Update the chart with live data
+        function updateLiveChart(data) {
+            if (!data || data.length === 0) {
+                errorElement.textContent = 'No data available for the selected metric.';
+                return;
+            }
+
+            const isVector = data[0].value !== undefined;
+            const timeframe = parseInt(timeframeInput.value) || 50;
+
+            if (isVector) {
+                data.forEach(item => {
+                    const timestamp = new Date(item.value[0] * 1000).toLocaleTimeString();
+                    const value = parseFloat(item.value[1]);
+
+                    metricsChart.data.labels.push(timestamp);
+                    metricsChart.data.datasets[0].data.push(value);
+
+                    // Limit the displayed points based on the timeframe
+                    if (metricsChart.data.labels.length > timeframe) {
+                        metricsChart.data.labels.shift();
+                        metricsChart.data.datasets[0].data.shift();
+                    }
+                });
+            } else {
+                data[0].values.forEach(([timestamp, value]) => {
+                    const formattedTimestamp = new Date(timestamp * 1000).toLocaleTimeString();
+                    const numericValue = parseFloat(value);
+
+                    metricsChart.data.labels.push(formattedTimestamp);
+                    metricsChart.data.datasets[0].data.push(numericValue);
+
+                    // Limit the displayed points based on the timeframe
+                    if (metricsChart.data.labels.length > timeframe) {
+                        metricsChart.data.labels.shift();
+                        metricsChart.data.datasets[0].data.shift();
+                    }
+                });
+            }
+
+            metricsChart.update();
+        }
+
+        // Start auto-updating
+        function startAutoUpdate() {
+            stopAutoUpdate();
+            intervalId = setInterval(fetchMetrics, parseInt(updateIntervalInput.value));
+        }
+
+        // Stop auto-updating
+        function stopAutoUpdate() {
+            if (intervalId) clearInterval(intervalId);
+        }
+
+        // Event listeners
+        document.getElementById('fetchMetrics').addEventListener('click', () => {
+            fetchMetrics();
+            startAutoUpdate();
+        });
+
+        document.getElementById('stopAutoUpdate').addEventListener('click', stopAutoUpdate);
+
+        document.getElementById('sourceSelector').addEventListener('change', fetchAvailableMetrics);
+
+        // Initialize on page load
+        initChart();
+        fetchAvailableMetrics();
+    </script>
+</body>
+</html>
+
