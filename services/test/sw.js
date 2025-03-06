@@ -1,4 +1,4 @@
-const CACHE_NAME = "pwa-cache-v1";
+const CACHE_NAME = "pwa-cache-v2";
 const ASSETS = [
     "/",
     "/index.html",
@@ -13,8 +13,16 @@ const ASSETS = [
 self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            console.log("Кеширование файлов...");
-            return cache.addAll(ASSETS);
+            return Promise.all(
+                ASSETS.map(url =>
+                    fetch(url)
+                        .then(response => {
+                            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                            return cache.put(url, response);
+                        })
+                        .catch(err => console.warn(`Не удалось закешировать ${url}:`, err))
+                )
+            );
         })
     );
 });
