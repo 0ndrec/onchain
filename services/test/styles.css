@@ -102,3 +102,46 @@ input, select {
     -webkit-appearance: none;
     appearance: none;
 }
+
+
+/* Контейнер с адаптивной сеткой 8x8 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1; /* Сетка остается квадратной */
+    margin: 20px auto;
+}
+
+/* Кнопки внутри сетки */
+.grid-button {
+    width: 100%;
+    aspect-ratio: 1; /* Квадратные кнопки */
+    background-color: var(--dynamic-accent, #007aff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: var(--dynamic-font-size, 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Эффект нажатия */
+.grid-button:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+/* Адаптация для маленьких экранов */
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(16, 1fr);
+    }
+}
