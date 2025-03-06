@@ -103,3 +103,32 @@ function generateRandomGradient() {
     
     return `linear-gradient(135deg, ${color1}, ${color2})`;
 }
+
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault(); // Отключаем стандартное предложение установки
+    deferredPrompt = event;
+
+    // Показываем кнопку "Установить"
+    const installButton = document.getElementById("installButton");
+    installButton.style.display = "block";
+
+    installButton.addEventListener("click", async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt(); // Запускаем диалог установки
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === "accepted") {
+                console.log("Приложение установлено");
+                installButton.style.display = "none"; // Скрываем кнопку
+            }
+            deferredPrompt = null;
+        }
+    });
+});
+
+// Скрываем кнопку, если приложение уже установлено
+window.addEventListener("appinstalled", () => {
+    console.log("PWA установлено");
+    document.getElementById("installButton").style.display = "none";
+});
