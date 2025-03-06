@@ -63,7 +63,6 @@ header {
 .content-block {
     background: rgba(0, 0, 0, 0.05);
     border-radius: 12px;
-    border: 1px #007aff;
     padding: var(--dynamic-padding, 16px);
     margin-bottom: 20px;
 }
