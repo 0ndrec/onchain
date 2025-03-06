@@ -5,7 +5,7 @@ body {
     padding: 20px;
     background-color: var(--system-background, #ffffff);
     color: var(--system-label, #000000);
-    font-size: var(--dynamic-font-size, 16px); /* Динамический размер шрифта */
+    font-size: var(--dynamic-font-size, 16px);
 }
 
 /* Темная тема */
@@ -43,7 +43,7 @@ header {
 /* Нативная кнопка */
 .native-button {
     appearance: none;
-    background-color: var(--dynamic-accent, #007aff); /* Цвет адаптируется */
+    background-color: var(--dynamic-accent, #007aff);
     color: white;
     border: none;
     border-radius: 8px;
@@ -59,11 +59,41 @@ header {
     opacity: 0.8;
 }
 
-/* Учитываем системные настройки анимации */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation: none !important;
-        transition: none !important;
+/* Контейнер с текстом */
+.content-block {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: var(--dynamic-padding, 16px);
+    margin-bottom: 20px;
+}
+
+/* Заголовки внутри секций */
+.content-block h2 {
+    font-size: calc(var(--dynamic-font-size, 16px) * 1.5);
+    margin-bottom: 8px;
+}
+
+/* Основной текст */
+.content-block p {
+    font-size: var(--dynamic-font-size, 16px);
+    line-height: 1.6;
+}
+
+/* Отзывчивый дизайн */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    .content-block {
+        padding: 12px;
+    }
+}
+@media (max-width: 480px) {
+    body {
+        font-size: 12px;
+    }
+    .content-block {
+        padding: 10px;
     }
 }
 
@@ -71,17 +101,4 @@ header {
 input, select {
     -webkit-appearance: none;
     appearance: none;
-}
-
-/* Улучшаем доступность */
-button:focus, input:focus, select:focus {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
-}
-
-/* Улучшаем скролл на мобильных */
-html {
-    scroll-behavior: smooth;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
 }
