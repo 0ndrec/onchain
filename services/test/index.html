@@ -11,11 +11,10 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
-    <!-- Подключение PWA -->
     <link rel="manifest" href="manifest.json">
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('https://onchain.run/services/test/sw.js')
+            navigator.serviceWorker.register('/sw.js')
                 .then(() => console.log("Service Worker зарегистрирован"))
                 .catch(err => console.error("Ошибка регистрации SW:", err));
         }
@@ -27,12 +26,10 @@
             <span class="material-icons">arrow_back</span>
         </button>
         <h1>Нативный UI</h1>
-        
-
+        <button id="installButton" class="install-button">Установить</button>
     </header>
     
     <main>
-        <button id="installButton">📲 Установить</button>
         <section class="grid-container" id="grid"></section>
     </main>
 

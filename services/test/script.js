@@ -109,31 +109,32 @@ function generateRandomGradient() {
 
 let deferredPrompt;
 
-window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
+window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault(); // Останавливаем стандартное поведение
     deferredPrompt = event;
 
     // Показываем кнопку установки
     const installButton = document.getElementById("installButton");
-    if (installButton) {
-        installButton.style.display = "block";
-        installButton.addEventListener("click", () => {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then(choiceResult => {
-                if (choiceResult.outcome === "accepted") {
-                    console.log("PWA установлено!");
+    installButton.style.display = "block";
+
+    installButton.addEventListener("click", () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt(); // Показываем нативное окно установки
+            deferredPrompt.userChoice.then(choice => {
+                if (choice.outcome === "accepted") {
+                    console.log("PWA установлено");
+                } else {
+                    console.log("Пользователь отклонил установку");
                 }
+                installButton.style.display = "none"; // Скрываем кнопку после действия
                 deferredPrompt = null;
             });
-        });
-    }
+        }
+    });
 });
 
-// Проверяем, установлено ли PWA
+// Скрываем кнопку, если PWA уже установлено
 window.addEventListener("appinstalled", () => {
     console.log("PWA уже установлено");
-    const installButton = document.getElementById("installButton");
-    if (installButton) {
-        installButton.style.display = "none";
-    }
+    document.getElementById("installButton").style.display = "none";
 });
