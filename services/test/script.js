@@ -71,3 +71,35 @@ document.querySelectorAll(".native-button").forEach(button => {
 // Обновляем масштаб при загрузке и изменении размера экрана
 window.addEventListener('load', updateScale);
 window.addEventListener('resize', updateScale);
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const grid = document.getElementById("grid");
+    const totalButtons = 32; // Количество кнопок
+
+    for (let i = 1; i <= totalButtons; i++) {
+        const button = document.createElement("button");
+        button.classList.add("grid-button");
+        button.innerText = i; // Номер кнопки
+        button.style.background = generateRandomGradient();
+        
+        button.addEventListener("click", () => {
+            alert(`Вы нажали кнопку ${i}`);
+        });
+
+        grid.appendChild(button);
+    }
+});
+
+// Генерация случайного градиента
+function generateRandomGradient() {
+    const colors = [
+        "#ff7eb3", "#ff758c", "#ff7eb3", "#ffdf8c",
+        "#ff9a8b", "#ff6a88", "#ffa07a", "#ff5f6d",
+        "#8ec5fc", "#e0c3fc", "#d4fc79", "#96e6a1"
+    ];
+    const color1 = colors[Math.floor(Math.random() * colors.length)];
+    const color2 = colors[Math.floor(Math.random() * colors.length)];
+    
+    return `linear-gradient(135deg, ${color1}, ${color2})`;
+}

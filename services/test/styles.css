@@ -104,32 +104,32 @@ input, select {
 }
 
 
-/* Контейнер с адаптивной сеткой 8x8 */
+/* Адаптивная сетка */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    gap: 5px;
-    width: 100%;
-    max-width: 600px;
-    aspect-ratio: 1; /* Сетка остается квадратной */
-    margin: 20px auto;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: auto;
 }
 
-/* Кнопки внутри сетки */
+/* Кнопка-круг с градиентом */
 .grid-button {
     width: 100%;
-    aspect-ratio: 1; /* Квадратные кнопки */
-    background-color: var(--dynamic-accent, #007aff);
-    color: white;
+    aspect-ratio: 1 / 1; /* Делаем кнопку квадратной */
+    border-radius: 50%;
     border: none;
-    border-radius: 8px;
-    font-size: var(--dynamic-font-size, 1rem);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Эффект нажатия */
@@ -138,10 +138,9 @@ input, select {
     opacity: 0.8;
 }
 
-/* Адаптация для маленьких экранов */
-@media (max-width: 480px) {
+/* Адаптация кнопок под мобильные */
+@media (max-width: 600px) {
     .grid-container {
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(16, 1fr);
     }
 }
