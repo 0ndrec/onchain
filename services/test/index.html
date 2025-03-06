@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
+    <!-- Поддержка цветовой схемы -->
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#ffffff">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>Нативный UI</title>
     <link rel="stylesheet" href="styles.css">
@@ -21,14 +21,7 @@
     </header>
     
     <main>
-        <section class="grid-container">
-            <!-- Заполняем 8x8 кнопками -->
-            <script>
-                for (let i = 0; i < 64; i++) {
-                    document.write(`<button class="grid-button">${i + 1}</button>`);
-                }
-            </script>
-        </section>
+        <section class="grid-container" id="grid"></section>
     </main>
 
     <script src="script.js"></script>
