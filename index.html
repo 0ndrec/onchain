@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>ONCHAIN.RU - Trusted PoS Validator</title>
+  <title></title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
@@ -12,96 +12,95 @@
   <link rel="stylesheet" href="./style.css">
   <script src="onchaindata.js"></script>
 </head>
-
 <body>
-  <div class="header">
-    <h1>
-      ONCHAIN.RUN
-    </h1>
-    <h2>
-      Stake with us!
-    </h2>
-  </div>
-
-  <div class="container_navbar">
-    <div class="navbar">
-      <a href="#">SERVICES</a>
-      <a href="#">GUIDES</a>
-      <a href="mailto:dmitromeierchuk@gmail.com">CONTACT</a>
+  <div class="coming-soon">
+    <h1>Blockchain Event Bridging Service - Coming Soon</h1>
+    <p>On-chain event delivery system connecting blockchain WebSocket events to n8n automation workflows. Stream real-time blockchain data seamlessly to your pipelines.</p>
+    <div id="pipeline-chart">
+      <div class="chart-stage" id="stage1">
+        <div class="stage-icon">📡</div>
+        <div class="stage-title">WebSocket Events</div>
+        <div class="stage-desc">Real-time blockchain data streams</div>
+      </div>
+      <div class="chart-connector">
+        <div class="arrow">→</div>
+      </div>
+      <div class="chart-stage" id="stage2">
+        <div class="stage-icon">⚙️</div>
+        <div class="stage-title">Event Processing</div>
+        <div class="stage-desc">Filter and transform blockchain events</div>
+      </div>
+      <div class="chart-connector">
+        <div class="arrow">→</div>
+      </div>
+      <div class="chart-stage" id="stage3">
+        <div class="stage-icon">🔗</div>
+        <div class="stage-title">n8n Webhooks</div>
+        <div class="stage-desc">Automated workflow triggers</div>
+      </div>
     </div>
   </div>
+  <script src="anime.min.js"></script>
+  <script>
+    // Pipeline chart animation
+    const chartStages = document.querySelectorAll('.chart-stage');
+    const arrows = document.querySelectorAll('.arrow');
 
-  <h3 class="caption">
-    Reliability, Efficiency, Security
-  </h3>
-  <div class="container_hero">
-    <h4>
-      Creating custom infrastructure solutions, our services are meticulously tailored to meet diverse blockchain needs, driving growth and innovation within the ecosystem.
-    </h4>
-    <div class="hero">
-      <img src="img\cpu.webp" alt="">
-    </div>
-  </div>
-  
-  <h3 class="caption">
-    Let's grow together
-  </h3>
-  <div class="container_info">
-    <div class="hero">
-      <img src="img\comm.webp" alt="">
-    </div>
-    <h4>
-      Interested in attracting an audience? Or are you looking for talent in the field of content creation? We also offer unparalleled access to deeply engaged communities in blockchain and Web3, with large Telegram and Twitter groups at our disposal. Our platforms are ideal for promoting projects and connecting with a dedicated audience keen on innovation in this space. Join us to elevate your project's visibility and reach passionate enthusiasts today.
-    </h4>
-  </div>
+    // Animate data flow through the pipeline
+    function animateDataFlow() {
+      // Highlight stages sequentially
+      chartStages.forEach((stage, index) => {
+        setTimeout(() => {
+          anime({
+            targets: stage,
+            backgroundColor: ['#333333', '#404040', '#333333'],
+            scale: [1, 1.05, 1],
+            duration: 2000,
+            easing: 'easeInOutQuad'
+          });
+        }, index * 1000);
+      });
 
-  <div class="container_chains">
-    <script>
-      generateDivs(testnet_config_files, 'testnet', '.container_chains');
-      generateDivs(mainnet_config_files, 'mainnet', '.container_chains');
-    </script>
-  </div>
+      // Animate arrows
+      arrows.forEach((arrow, index) => {
+        setTimeout(() => {
+          anime({
+            targets: arrow,
+            color: ['#666666', '#cccccc', '#666666'],
+            scale: [1, 1.2, 1],
+            duration: 1500,
+            easing: 'easeInOutQuad'
+          });
+        }, (index * 1000) + 500);
+      });
 
+      // Repeat animation
+      setTimeout(animateDataFlow, 5000);
+    }
 
-  
+    // Start the animation
+    animateDataFlow();
 
-  <footer>
-    <img src=""/>
-  </footer>
-  <!-- partial -->
-
-</body>
-
-<script>
-  // Auto scroll page by presing the button services to down maximum
-  document.querySelector('.navbar a').addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector('.container_chains').scrollIntoView({
-      behavior: 'smooth'
+    // Add hover effects
+    chartStages.forEach(stage => {
+      stage.addEventListener('mouseenter', () => {
+        anime({
+          targets: stage,
+          scale: 1.05,
+          backgroundColor: '#404040',
+          duration: 300,
+          easing: 'easeOutQuad'
+        });
+      });
+      stage.addEventListener('mouseleave', () => {
+        anime({
+          targets: stage,
+          scale: 1,
+          backgroundColor: '#333333',
+          duration: 300,
+          easing: 'easeOutQuad'
+        });
+      });
     });
-  });
-
-</script>
-
-<!-- Hendle a pressing button in "project_item". Open new tab -->
-<script>
-  const buttons = document.querySelectorAll('.project_item .button');
-  const projects_dict = {
-    'AVAIL': '',
-    'STREAMR': 'https://streamr.network/hub/network/operators/0x1253f634ae2c8004ea7c9057d6ccf201f59a4e4a',
-    '0G': 'https://explorer.validatorvn.com/OG-Testnet/staking/evmosvaloper1ea8sks0v0xsle0yrtxdkpsp3getn93d6v8s9m6',
-    'WARDEN': 'https://testnet.dashboard.onchain.run/warden/staking/wardenvaloper144nqxgt6jdrm4srzzgx4dvz04hd8q2e8hlu6gq',
-    'SIDE': ''
-  };
-  buttons.forEach((button, index) => {
-    button.addEventListener('click', function () {
-      if (projects_dict[button.parentElement.querySelector('.name').textContent].length < 6) {
-        return;
-      }
-      window.open(projects_dict[button.parentElement.querySelector('.name').textContent]);
-    });
-  });
-</script>
-
-
-</html>
+  </script>
+  
