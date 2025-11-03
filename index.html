@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>OnChain Run - Real-Time Blockchain Event Streaming</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
@@ -14,93 +14,130 @@
 </head>
 <body>
   <div class="coming-soon">
-    <h1>Blockchain Event Bridging Service - Coming Soon</h1>
-    <p>On-chain event delivery system connecting blockchain WebSocket events to n8n automation workflows. Stream real-time blockchain data seamlessly to your pipelines.</p>
-    <div id="pipeline-chart">
-      <div class="chart-stage" id="stage1">
-        <div class="stage-icon">📡</div>
-        <div class="stage-title">WebSocket Events</div>
-        <div class="stage-desc">Real-time blockchain data streams</div>
+    <div class="coming-soon-label">COMING SOON</div>
+    <h1>OnChain Run - Real-Time Blockchain Event Streaming</h1>
+    <p>Stream blockchain events into powerful automation pipelines. OnChain Run connects live on-chain WebSocket streams to n8n workflows, transforming raw blockchain data into intelligent business actions. Track transactions, smart contracts, and network dynamics with ultra-low latency event processing.</p>
+
+    <div class="terminal-infographic">
+      <div class="terminal-header">
+        <span class="terminal-title">onchain-run@terminal:~$</span>
+        <div class="terminal-controls">
+          <span class="control red"></span>
+          <span class="control yellow"></span>
+          <span class="control green"></span>
+        </div>
       </div>
-      <div class="chart-connector">
-        <div class="arrow">→</div>
-      </div>
-      <div class="chart-stage" id="stage2">
-        <div class="stage-icon">⚙️</div>
-        <div class="stage-title">Event Processing</div>
-        <div class="stage-desc">Filter and transform blockchain events</div>
-      </div>
-      <div class="chart-connector">
-        <div class="arrow">→</div>
-      </div>
-      <div class="chart-stage" id="stage3">
-        <div class="stage-icon">🔗</div>
-        <div class="stage-title">n8n Webhooks</div>
-        <div class="stage-desc">Automated workflow triggers</div>
+      <div class="terminal-body">
+        <div class="terminal-line">
+          <span class="terminal-prompt">onchain-run@terminal:~$</span>
+          <span class="terminal-command">onchain-run stream --network ethereum --events tx,contract</span>
+        </div>
+        <div class="terminal-output">
+          <div class="output-line">[INFO] Connecting to Ethereum...</div>
+          <div class="output-line">[OK] Filters: tx, contract</div>
+          <div class="output-line">[RUNNING] OnChain Run active</div>
+        </div>
+        <div class="terminal-line">
+          <span class="terminal-prompt">onchain-run@terminal:~$</span>
+          <span class="terminal-command">onchain-run watch</span>
+        </div>
+        <div class="terminal-output">
+          <div class="output-line log-timestamp">[17:57:26] TX 0x123...abc confirmed ▶ processing...</div>
+          <div class="output-line log-timestamp">[17:57:27] Contract 0x456...def deployed ▶ processing...</div>
+          <div class="output-line log-timestamp">[17:57:28] n8n workflow #42 triggered ✓</div>
+        </div>
+        <div class="terminal-line">
+          <span class="terminal-prompt">onchain-run@terminal:~$</span>
+          <span class="terminal-command">onchain-run status</span>
+        </div>
+        <div class="terminal-output">
+          <div class="metric-line">Uptime: 99.9% | Events: 1.2M | Latency: <100ms</div>
+          <div class="metric-line">Networks: ETH, Polygon, BSC | Workflows: 156</div>
+        </div>
+        <div class="terminal-cursor">█</div>
+        <div class="progress-animation">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-text">Processing events...</div>
+        </div>
       </div>
     </div>
+
   </div>
-  <script src="anime.min.js"></script>
+
+  <!-- Static Background Network Pattern -->
+  <canvas id="network-canvas"></canvas>
   <script>
-    // Pipeline chart animation
-    const chartStages = document.querySelectorAll('.chart-stage');
-    const arrows = document.querySelectorAll('.arrow');
+    // Static network pattern
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
 
-    // Animate data flow through the pipeline
-    function animateDataFlow() {
-      // Highlight stages sequentially
-      chartStages.forEach((stage, index) => {
-        setTimeout(() => {
-          anime({
-            targets: stage,
-            backgroundColor: ['#333333', '#404040', '#333333'],
-            scale: [1, 1.05, 1],
-            duration: 2000,
-            easing: 'easeInOutQuad'
-          });
-        }, index * 1000);
-      });
-
-      // Animate arrows
-      arrows.forEach((arrow, index) => {
-        setTimeout(() => {
-          anime({
-            targets: arrow,
-            color: ['#666666', '#cccccc', '#666666'],
-            scale: [1, 1.2, 1],
-            duration: 1500,
-            easing: 'easeInOutQuad'
-          });
-        }, (index * 1000) + 500);
-      });
-
-      // Repeat animation
-      setTimeout(animateDataFlow, 5000);
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
 
-    // Start the animation
-    animateDataFlow();
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    // Add hover effects
-    chartStages.forEach(stage => {
-      stage.addEventListener('mouseenter', () => {
-        anime({
-          targets: stage,
-          scale: 1.05,
-          backgroundColor: '#404040',
-          duration: 300,
-          easing: 'easeOutQuad'
+    function drawStaticNetwork() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Configuration
+      const nodeCount = 60;
+      const connectionDistance = 150;
+      const nodeColor = 'rgba(50, 193, 70, 0.8)';
+      const lineColor = 'rgba(50, 193, 70, 0.2)';
+      
+      // Create static nodes
+      const nodes = [];
+      for (let i = 0; i < nodeCount; i++) {
+        nodes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height
         });
+      }
+      
+      // Draw connections
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 1;
+      
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < connectionDistance) {
+            // Opacity based on distance
+            const opacity = 1 - (distance / connectionDistance);
+            ctx.strokeStyle = `rgba(50, 193, 70, ${opacity * 0.2})`;
+            
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      
+      // Draw nodes
+      ctx.fillStyle = nodeColor;
+      nodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+        ctx.fill();
       });
-      stage.addEventListener('mouseleave', () => {
-        anime({
-          targets: stage,
-          scale: 1,
-          backgroundColor: '#333333',
-          duration: 300,
-          easing: 'easeOutQuad'
-        });
-      });
+    }
+
+    // Initial draw
+    drawStaticNetwork();
+    
+    // Redraw on resize
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      drawStaticNetwork();
     });
   </script>
   
