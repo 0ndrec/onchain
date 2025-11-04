@@ -1,143 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>OnChain Run - Real-Time Blockchain Event Streaming</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="./style.css">
-  <script src="onchaindata.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - Onchain Events Pipeline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        .status-dot {
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+    </style>
 </head>
-<body>
-  <div class="coming-soon">
-    <div class="coming-soon-label">COMING SOON</div>
-    <h1>OnChain Run - Real-Time Blockchain Event Streaming</h1>
-    <p>Stream blockchain events into powerful automation pipelines. OnChain Run connects live on-chain WebSocket streams to n8n workflows, transforming raw blockchain data into intelligent business actions. Track transactions, smart contracts, and network dynamics with ultra-low latency event processing.</p>
+<body class="bg-black text-white min-h-screen">
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+        <div class="max-w-6xl w-full space-y-8 md:space-y-12">
+            
+            <!-- Header -->
+            <div class="text-center space-y-4 fade-in">
+                <h1 class="text-4xl md:text-7xl font-bold tracking-tight">
+                    Coming Soon
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-400">
+                    Onchain Events → Webhook Receivers
+                </p>
+            </div>
 
-    <div class="terminal-infographic">
-      <div class="terminal-header">
-        <span class="terminal-title">onchain-run@terminal:~$</span>
-        <div class="terminal-controls">
-          <span class="control red"></span>
-          <span class="control yellow"></span>
-          <span class="control green"></span>
+            <!-- Enhanced Pipeline Animation -->
+            <div class="relative border border-gray-800 rounded-lg bg-gray-950 overflow-hidden fade-in" style="animation-delay: 0.2s">
+                <div class="p-4 md:p-8">
+                    <svg id="pipeline" class="w-full h-48 md:h-64"></svg>
+                </div>
+                
+                <!-- Status Semaphores -->
+                <div class="absolute top-4 left-4 right-4 flex justify-between text-xs font-mono">
+                    <div class="flex items-center space-x-2">
+                        <div class="flex space-x-1">
+                            <div id="sem1" class="w-2 h-2 rounded-full bg-gray-700"></div>
+                            <div id="sem2" class="w-2 h-2 rounded-full bg-gray-700"></div>
+                            <div id="sem3" class="w-2 h-2 rounded-full bg-gray-700"></div>
+                        </div>
+                        <span class="text-gray-500">LISTENING</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-500">DELIVERING</span>
+                        <div class="flex space-x-1">
+                            <div id="sem4" class="w-2 h-2 rounded-full bg-gray-700"></div>
+                            <div id="sem5" class="w-2 h-2 rounded-full bg-gray-700"></div>
+                            <div id="sem6" class="w-2 h-2 rounded-full bg-gray-700"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem Statement -->
+            <div class="text-center space-y-6 max-w-3xl mx-auto fade-in" style="animation-delay: 0.4s">
+                <div class="space-y-3">
+                    <p class="text-gray-400 leading-relaxed text-sm md:text-base">
+                        Teams spend <span class="text-white font-semibold">$5k-50k annually</span> and 
+                        <span class="text-white font-semibold"> hundreds of engineering hours</span> building 
+                        and maintaining custom blockchain indexing infrastructure just to listen for onchain events.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed text-sm md:text-base">
+                        Node management, RPC costs, event parsing, retry logic, monitoring — it's the same 
+                        undifferentiated heavy lifting every project has to rebuild from scratch.
+                    </p>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-6 space-y-3">
+                    <p class="text-lg md:text-xl text-gray-300">
+                        We're solving this.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed text-sm md:text-base">
+                        Real-time delivery of blockchain events to your endpoints. 
+                        No infrastructure, no maintenance, no custom indexers. 
+                        Just events flowing reliably to your app.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 fade-in" style="animation-delay: 0.6s">
+                <div class="border border-gray-800 rounded-lg p-4 md:p-6 bg-gray-950 hover:border-gray-700 transition-colors">
+                    <div class="text-sm font-mono text-gray-500 mb-2">01</div>
+                    <h3 class="text-base md:text-lg font-semibold mb-2">Real-time Delivery</h3>
+                    <p class="text-xs md:text-sm text-gray-400">Instant webhook notifications for onchain events</p>
+                </div>
+                
+                <div class="border border-gray-800 rounded-lg p-4 md:p-6 bg-gray-950 hover:border-gray-700 transition-colors">
+                    <div class="text-sm font-mono text-gray-500 mb-2">02</div>
+                    <h3 class="text-base md:text-lg font-semibold mb-2">Reliable Pipeline</h3>
+                    <p class="text-xs md:text-sm text-gray-400">Built-in retry logic and delivery guarantees</p>
+                </div>
+                
+                <div class="border border-gray-800 rounded-lg p-4 md:p-6 bg-gray-950 hover:border-gray-700 transition-colors">
+                    <div class="text-sm font-mono text-gray-500 mb-2">03</div>
+                    <h3 class="text-base md:text-lg font-semibold mb-2">Simple Integration</h3>
+                    <p class="text-xs md:text-sm text-gray-400">Easy setup with any webhook receiver</p>
+                </div>
+            </div>
+
+            <!-- Status Footer -->
+            <div class="text-center space-y-4 pt-8 fade-in" style="animation-delay: 0.8s">
+                <div class="inline-flex items-center space-x-2 text-sm text-gray-500">
+                    <div class="w-2 h-2 bg-gray-600 rounded-full status-dot"></div>
+                    <span class="font-mono">BUILDING IN PROGRESS</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="terminal-body">
-        <div class="terminal-line">
-          <span class="terminal-prompt">onchain-run@terminal:~$</span>
-          <span class="terminal-command">onchain-run stream --network ethereum --events tx,contract</span>
-        </div>
-        <div class="terminal-output">
-          <div class="output-line">[INFO] Connecting to Ethereum...</div>
-          <div class="output-line">[OK] Filters: tx, contract</div>
-          <div class="output-line">[RUNNING] OnChain Run active</div>
-        </div>
-        <div class="terminal-line">
-          <span class="terminal-prompt">onchain-run@terminal:~$</span>
-          <span class="terminal-command">onchain-run watch</span>
-        </div>
-        <div class="terminal-output">
-          <div class="output-line log-timestamp">[17:57:26] TX 0x123...abc confirmed ▶ processing...</div>
-          <div class="output-line log-timestamp">[17:57:27] Contract 0x456...def deployed ▶ processing...</div>
-          <div class="output-line log-timestamp">[17:57:28] n8n workflow #42 triggered ✓</div>
-        </div>
-        <div class="terminal-line">
-          <span class="terminal-prompt">onchain-run@terminal:~$</span>
-          <span class="terminal-command">onchain-run status</span>
-        </div>
-        <div class="terminal-output">
-          <div class="metric-line">Uptime: 99.9% | Events: 1.2M | Latency: <100ms</div>
-          <div class="metric-line">Networks: ETH, Polygon, BSC | Workflows: 156</div>
-        </div>
-        <div class="terminal-cursor">█</div>
-        <div class="progress-animation">
-          <div class="progress-bar">
-            <div class="progress-fill"></div>
-          </div>
-          <div class="progress-text">Processing events...</div>
-        </div>
-      </div>
     </div>
 
-  </div>
+    <script>
+        // Enhanced pipeline animation
+        const svg = document.getElementById('pipeline');
+        const bbox = svg.getBoundingClientRect();
+        const width = bbox.width;
+        const height = bbox.height;
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
-  <!-- Static Background Network Pattern -->
-  <canvas id="network-canvas"></canvas>
-  <script>
-    // Static network pattern
-    const canvas = document.getElementById('network-canvas');
-    const ctx = canvas.getContext('2d');
+        const numParticles = 12;
+        const particles = [];
+        const nodes = [];
+        const semaphores = {
+            listening: [
+                document.getElementById('sem1'),
+                document.getElementById('sem2'),
+                document.getElementById('sem3')
+            ],
+            delivering: [
+                document.getElementById('sem4'),
+                document.getElementById('sem5'),
+                document.getElementById('sem6')
+            ]
+        };
+        let semIndexListen = 0;
+        let semIndexDeliver = 0;
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+        // Create blockchain node
+        const blockchain = {
+            x: 80,
+            y: height / 2,
+            radius: 20,
+            label: 'BLOCKCHAINS'
+        };
 
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+        // Create processing nodes
+        const processor = {
+            x: width / 2,
+            y: height / 2,
+            radius: 15,
+            label: 'PROCESSING HUB'
+        };
 
-    function drawStaticNetwork() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Configuration
-      const nodeCount = 60;
-      const connectionDistance = 150;
-      const nodeColor = 'rgba(50, 193, 70, 0.8)';
-      const lineColor = 'rgba(50, 193, 70, 0.2)';
-      
-      // Create static nodes
-      const nodes = [];
-      for (let i = 0; i < nodeCount; i++) {
-        nodes.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height
+        // Create webhook nodes
+        const webhook1 = { x: width - 100, y: height / 2 - 40, radius: 12, label: 'ENDPOINT-A' };
+        const webhook2 = { x: width - 100, y: height / 2, radius: 12, label: 'ENDPOINT-B' };
+        const webhook3 = { x: width - 100, y: height / 2 + 40, radius: 12, label: 'ENDPOINT-C' };
+        
+        nodes.push(blockchain, processor, webhook1, webhook2, webhook3);
+
+        // Draw connections
+        const connections = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
+        
+        // Blockchain to processor
+        drawDashedLine(connections, blockchain.x + blockchain.radius, blockchain.y, processor.x - processor.radius, processor.y);
+        
+        // Processor to webhooks
+        drawDashedLine(connections, processor.x + processor.radius, processor.y, webhook1.x - webhook1.radius, webhook1.y);
+        drawDashedLine(connections, processor.x + processor.radius, processor.y, webhook2.x - webhook2.radius, webhook2.y);
+        drawDashedLine(connections, processor.x + processor.radius, processor.y, webhook3.x - webhook3.radius, webhook3.y);
+
+        // Draw nodes
+        const nodesGroup = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
+        nodes.forEach(node => {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', node.x);
+            circle.setAttribute('cy', node.y);
+            circle.setAttribute('r', node.radius);
+            circle.setAttribute('fill', '#111827');
+            circle.setAttribute('stroke', '#374151');
+            circle.setAttribute('stroke-width', '2');
+            nodesGroup.appendChild(circle);
+
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', node.x);
+            text.setAttribute('y', node.y - node.radius - 10);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', '#6B7280');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('font-family', 'monospace');
+            text.textContent = node.label;
+            nodesGroup.appendChild(text);
         });
-      }
-      
-      // Draw connections
-      ctx.strokeStyle = lineColor;
-      ctx.lineWidth = 1;
-      
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < connectionDistance) {
-            // Opacity based on distance
-            const opacity = 1 - (distance / connectionDistance);
-            ctx.strokeStyle = `rgba(50, 193, 70, ${opacity * 0.2})`;
-            
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      
-      // Draw nodes
-      ctx.fillStyle = nodeColor;
-      nodes.forEach(node => {
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
 
-    // Initial draw
-    drawStaticNetwork();
-    
-    // Redraw on resize
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      drawStaticNetwork();
-    });
-  </script>
-  
+        // Particle system
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = blockchain.x + blockchain.radius;
+                this.y = blockchain.y;
+                this.progress = 0;
+                this.phase = 0; // 0: to processor, 1: to webhook
+                this.targetWebhook = Math.floor(Math.random() * 3);
+                this.opacity = 1;
+                
+                if (!this.element) {
+                    this.element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    this.element.setAttribute('r', '3');
+                    this.element.setAttribute('fill', 'white');
+                    svg.appendChild(this.element);
+                }
+            }
+            update(dt) {
+                this.progress += dt * 1.2;
+
+                if (this.phase === 0) {
+                    // Moving to processor
+                    const t = Math.min(this.progress, 1);
+                    this.x = blockchain.x + blockchain.radius + (processor.x - processor.radius - blockchain.x - blockchain.radius) * t;
+                    this.y = blockchain.y;
+                    
+                    if (this.progress >= 1) {
+                        this.phase = 1;
+                        this.progress = 0;
+                        // Flash listening semaphore
+                        const sem = semaphores.listening[semIndexListen % 3];
+                        if (sem) {
+                            sem.classList.remove('bg-gray-700');
+                            sem.classList.add('bg-green-500');
+                            setTimeout(() => {
+                                if (sem) {
+                                    sem.classList.remove('bg-green-500');
+                                    sem.classList.add('bg-gray-700');
+                                }
+                            }, 300);
+                        }
+                        semIndexListen++;
+                    }
+                } else {
+                    // Moving to webhook
+                    const webhooks = [webhook1, webhook2, webhook3];
+                    const target = webhooks[this.targetWebhook];
+                    const t = Math.min(this.progress, 1);
+                    
+                    this.x = processor.x + processor.radius + (target.x - target.radius - processor.x - processor.radius) * t;
+                    this.y = processor.y + (target.y - processor.y) * t;
+                    this.opacity = t < 0.9 ? 1 : (1 - t) * 10;
+                    
+                    if (this.progress >= 1) {
+                        // Flash delivering semaphore
+                        const sem = semaphores.delivering[semIndexDeliver % 3];
+                        if (sem) {
+                            sem.classList.remove('bg-gray-700');
+                            sem.classList.add('bg-blue-500');
+                            setTimeout(() => {
+                                if (sem) {
+                                    sem.classList.remove('bg-blue-500');
+                                    sem.classList.add('bg-gray-700');
+                                }
+                            }, 300);
+                        }
+                        semIndexDeliver++;
+                        this.reset();
+                    }
+                }
+
+                this.element.setAttribute('cx', this.x);
+                this.element.setAttribute('cy', this.y);
+                this.element.setAttribute('opacity', this.opacity);
+            }
+            }
+        
+
+        // Initialize particles
+        for (let i = 0; i < numParticles; i++) {
+            const p = new Particle();
+            p.progress = i / numParticles;
+            particles.push(p);
+        }
+
+        // Animation loop
+        let lastTime = Date.now();
+        function animate() {
+            const now = Date.now();
+            const dt = (now - lastTime) / 1000;
+            lastTime = now;
+
+            particles.forEach(p => p.update(dt));
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        function drawDashedLine(parent, x1, y1, x2, y2) {
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            line.setAttribute('stroke', '#374151');
+            line.setAttribute('stroke-width', '1');
+            line.setAttribute('stroke-dasharray', '4,4');
+            parent.appendChild(line);
+        }
+    </script>
+</body>
+</html>
