@@ -183,18 +183,40 @@
         // Draw nodes
         const nodesGroup = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
         nodes.forEach(node => {
-            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circle.setAttribute('cx', node.x);
-            circle.setAttribute('cy', node.y);
-            circle.setAttribute('r', node.radius);
-            circle.setAttribute('fill', '#111827');
-            circle.setAttribute('stroke', '#374151');
-            circle.setAttribute('stroke-width', '2');
-            nodesGroup.appendChild(circle);
+            if (node.label === 'PROCESSING HUB') {
+                // Draw triangle for processing hub
+                const triangle = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                const size = node.radius;
+                const points = [
+                    `${node.x},${node.y - size}`,  // Top point
+                    `${node.x - size},${node.y + size}`,  // Bottom left
+                    `${node.x + size},${node.y + size}`   // Bottom right
+                ].join(' ');
+                triangle.setAttribute('points', points);
+                triangle.setAttribute('fill', '#111827');
+                triangle.setAttribute('stroke', '#374151');
+                triangle.setAttribute('stroke-width', '2');
+                nodesGroup.appendChild(triangle);
+            } else {
+                // Draw circle for other nodes
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', node.x);
+                circle.setAttribute('cy', node.y);
+                circle.setAttribute('r', node.radius);
+                circle.setAttribute('fill', '#111827');
+                circle.setAttribute('stroke', '#374151');
+                circle.setAttribute('stroke-width', '2');
+                nodesGroup.appendChild(circle);
+            }
 
             const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
             text.setAttribute('x', node.x);
-            text.setAttribute('y', node.y - node.radius - 10);
+            // Adjust y position for triangle vs circle
+            if (node.label === 'PROCESSING HUB') {
+                text.setAttribute('y', node.y - node.radius - 10);
+            } else {
+                text.setAttribute('y', node.y - node.radius - 10);
+            }
             text.setAttribute('text-anchor', 'middle');
             text.setAttribute('fill', '#6B7280');
             text.setAttribute('font-size', '10');
