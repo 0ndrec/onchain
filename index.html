@@ -209,20 +209,29 @@
                 nodesGroup.appendChild(circle);
             }
 
-            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            text.setAttribute('x', node.x);
-            // Adjust y position for triangle vs circle
-            if (node.label === 'PROCESSING HUB') {
-                text.setAttribute('y', node.y - node.radius - 10);
+            if (node.label.includes('ENDPOINT')) {
+                // add text inside
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', node.x);
+                text.setAttribute('y', node.y + 4);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('fill', '#6B7280');
+                text.setAttribute('font-size', '14');
+                text.setAttribute('font-family', 'monospace');
+                text.textContent = node.label.split('-')[1];
+                nodesGroup.appendChild(text);
             } else {
+                // add text above
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', node.x);
                 text.setAttribute('y', node.y - node.radius - 10);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('fill', '#6B7280');
+                text.setAttribute('font-size', '10');
+                text.setAttribute('font-family', 'monospace');
+                text.textContent = node.label;
+                nodesGroup.appendChild(text);
             }
-            text.setAttribute('text-anchor', 'middle');
-            text.setAttribute('fill', '#6B7280');
-            text.setAttribute('font-size', '10');
-            text.setAttribute('font-family', 'monospace');
-            text.textContent = node.label;
-            nodesGroup.appendChild(text);
         });
 
         // Particle system
