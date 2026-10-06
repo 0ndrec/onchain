@@ -3,9 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon - Onchain Events Pipeline</title>
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Blockchain events sent to your webhook endpoints in real time. No nodes to run, no indexer to maintain. Coming soon.">
+    <title>Onchain Events Pipeline</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23f6b73e'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Bricolage Grotesque"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace']
+                    },
+                    colors: {
+                        event: '#f6b73e',
+                        ok: '#32c146'
+                    }
+                }
+            }
+        };
+    </script>
     <style>
+        /* Dark only. Painted before Tailwind loads so the page never flashes light. */
+        :root { color-scheme: dark; }
+        html { background: #000; color: #fff; }
+        ::selection { background: #f6b73e; color: #000; }
+
         @keyframes pulse-dot {
             0%, 100% { opacity: 0.3; }
             50% { opacity: 1; }
@@ -13,340 +41,367 @@
         .status-dot {
             animation: pulse-dot 2s ease-in-out infinite;
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        /* Pipeline diagram */
+        #pipeline { display: block; width: 100%; height: 12rem; }
+        .wire { fill: none; stroke: #374151; stroke-width: 1; stroke-dasharray: 3 5; }
+        .link { stroke: #374151; stroke-width: 1.5; }
+        .node { fill: #030712; stroke: #4b5563; stroke-width: 1.5; transition: fill 0.5s ease-out, stroke 0.5s ease-out; }
+        .node-latest { stroke: #f6b73e; }
+        .flash-ok { fill: #32c146; stroke: #32c146; transition: none; }
+        .flash-retry { fill: #f6b73e; stroke: #f6b73e; transition: none; }
+        .particle { fill: #fff; }
+        .particle-event { fill: #f6b73e; }
+        .diagram-label { fill: #9ca3af; font-size: 12px; }
+        .diagram-path { fill: #9ca3af; font-size: 12px; }
+
+        /* Delivery log */
+        #log { height: 8rem; overflow: hidden; }
+        .log-row {
+            display: grid;
+            grid-template-columns: 4.25rem 1fr auto;
+            column-gap: 0.75rem;
+            align-items: center;
+            height: 2rem;
+            font-size: 12px;
+            white-space: nowrap;
+            color: #9ca3af;
         }
-        .fade-in {
-            animation: slideIn 0.6s ease-out forwards;
+        .log-row > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+        .log-row:nth-child(2) { opacity: 0.7; }
+        .log-row:nth-child(3) { opacity: 0.45; }
+        .log-row:nth-child(4) { opacity: 0.25; }
+        .log-row .name { color: #fff; }
+        .log-row .block, .log-row .ms, .log-row .verb { display: none; }
+        .log-row .ms { text-align: right; }
+        .status-ok { color: #32c146; }
+        .status-retry { color: #f6b73e; }
+
+        @media (min-width: 640px) {
+            #pipeline { height: 15rem; }
+            .log-row { grid-template-columns: 11rem 6rem 1fr 7rem 3.5rem; column-gap: 1rem; }
+            .log-row .block, .log-row .ms { display: block; }
+            .log-row .verb { display: inline; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .status-dot { animation: none; }
         }
     </style>
 </head>
-<body class="bg-black text-white min-h-screen">
-    <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
-        <div class="max-w-6xl w-full space-y-8 md:space-y-12">
-            
-            <!-- Header -->
-            <div class="text-center space-y-4 fade-in">
-                <h1 class="text-4xl md:text-7xl font-bold tracking-tight">
-                    Coming Soon
-                </h1>
-                <p class="text-lg md:text-2xl text-gray-400">
-                    Onchain Events → Webhook Receivers
-                </p>
-            </div>
+<body class="bg-black font-sans text-white antialiased">
+    <div class="mx-auto max-w-5xl px-4 sm:px-8">
 
-            <!-- Enhanced Pipeline Animation -->
-            <div class="relative border border-gray-800 rounded-lg bg-gray-950 overflow-hidden fade-in" style="animation-delay: 0.2s">
-                <div class="p-4 md:p-8">
-                    <svg id="pipeline" class="w-full h-48 md:h-64"></svg>
+        <!-- Header -->
+        <header class="flex items-center justify-between py-6">
+            <span class="font-mono text-sm">onchain.run</span>
+            <span class="inline-flex items-center gap-2 text-sm text-gray-400">
+                <span class="status-dot h-2 w-2 rounded-full bg-event"></span>
+                Coming soon
+            </span>
+        </header>
+
+        <main>
+            <!-- Hero -->
+            <section class="pb-10 pt-10 sm:pb-14 sm:pt-20">
+                <h1 class="max-w-3xl text-[clamp(2.5rem,8vw,5rem)] font-semibold leading-[0.95] tracking-[-0.03em]">
+                    Onchain events, delivered to your webhook.
+                </h1>
+                <p class="mt-6 max-w-xl text-lg leading-relaxed text-gray-400 sm:text-xl">
+                    Blockchain events sent to your endpoints in real time.
+                    No nodes to run, no indexer to maintain.
+                </p>
+            </section>
+
+            <!-- Pipeline Animation -->
+            <figure class="overflow-hidden rounded-xl border border-gray-800 bg-gray-950">
+                <div class="px-4 pt-5 sm:px-8 sm:pt-7">
+                    <svg id="pipeline" role="img" aria-label="Events flow from new blocks through a decode and filter step to three webhook endpoints."></svg>
                 </div>
-                
-                <!-- Status Semaphores -->
-                <div class="absolute top-4 left-4 right-4 flex justify-between text-xs font-mono">
-                    <div class="flex items-center space-x-2">
-                        <div class="flex space-x-1">
-                            <div id="sem1" class="w-2 h-2 rounded-full bg-gray-700"></div>
-                            <div id="sem2" class="w-2 h-2 rounded-full bg-gray-700"></div>
-                            <div id="sem3" class="w-2 h-2 rounded-full bg-gray-700"></div>
-                        </div>
-                        <span class="text-gray-500">LISTENING</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-gray-500">DELIVERING</span>
-                        <div class="flex space-x-1">
-                            <div id="sem4" class="w-2 h-2 rounded-full bg-gray-700"></div>
-                            <div id="sem5" class="w-2 h-2 rounded-full bg-gray-700"></div>
-                            <div id="sem6" class="w-2 h-2 rounded-full bg-gray-700"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <ol id="log" class="border-t border-gray-800 px-4 font-mono sm:px-8" aria-hidden="true"></ol>
+                <figcaption class="border-t border-gray-800 px-4 py-3 text-xs leading-relaxed text-gray-400 sm:px-8">
+                    Simulated preview. Events leave a chain, get decoded and filtered,
+                    and arrive at your endpoints as HTTP requests. Failed deliveries are retried.
+                </figcaption>
+            </figure>
 
             <!-- Problem Statement -->
-            <div class="text-center space-y-6 max-w-3xl mx-auto fade-in" style="animation-delay: 0.4s">
-                <div class="space-y-3">
-                    <p class="text-gray-400 leading-relaxed text-sm md:text-base">
-                        Teams spend <span class="text-white font-semibold">$5k-50k annually</span> and 
-                        <span class="text-white font-semibold"> hundreds of engineering hours</span> building 
+            <section class="grid gap-x-12 gap-y-5 border-b border-gray-800 py-14 sm:py-20 md:grid-cols-12">
+                <h2 class="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl md:col-span-4">
+                    Every team rebuilds the same indexer.
+                </h2>
+                <div class="max-w-xl space-y-4 leading-relaxed text-gray-400 md:col-span-8">
+                    <p>
+                        Teams spend <span class="font-semibold text-white">$5k-50k annually</span> and
+                        <span class="font-semibold text-white">hundreds of engineering hours</span> building
                         and maintaining custom blockchain indexing infrastructure just to listen for onchain events.
                     </p>
-                    <p class="text-gray-400 leading-relaxed text-sm md:text-base">
-                        Node management, RPC costs, event parsing, retry logic, monitoring — it's the same 
+                    <p>
+                        Node management, RPC costs, event parsing, retry logic, monitoring: it's the same
                         undifferentiated heavy lifting every project has to rebuild from scratch.
                     </p>
                 </div>
-                
-                <div class="border-t border-gray-800 pt-6 space-y-3">
-                    <p class="text-lg md:text-xl text-gray-300">
-                        We're solving this.
-                    </p>
-                    <p class="text-gray-400 leading-relaxed text-sm md:text-base">
-                        Real-time delivery of blockchain events to your endpoints. 
-                        No infrastructure, no maintenance, no custom indexers. 
+            </section>
+
+            <!-- Solution and Features -->
+            <section class="grid gap-x-12 gap-y-5 py-14 sm:py-20 md:grid-cols-12">
+                <h2 class="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl md:col-span-4">
+                    We're solving this.
+                </h2>
+                <div class="md:col-span-8">
+                    <p class="max-w-xl leading-relaxed text-gray-400">
+                        Real-time delivery of blockchain events to your endpoints.
+                        No infrastructure, no maintenance, no custom indexers.
                         Just events flowing reliably to your app.
                     </p>
+                    <dl class="mt-10 grid gap-8 sm:grid-cols-3">
+                        <div>
+                            <dt class="font-semibold">Real-time delivery</dt>
+                            <dd class="mt-2 text-sm leading-relaxed text-gray-400">Instant webhook notifications for onchain events</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold">Reliable pipeline</dt>
+                            <dd class="mt-2 text-sm leading-relaxed text-gray-400">Built-in retry logic and delivery guarantees</dd>
+                        </div>
+                        <div>
+                            <dt class="font-semibold">Simple integration</dt>
+                            <dd class="mt-2 text-sm leading-relaxed text-gray-400">Easy setup with any webhook receiver</dd>
+                        </div>
+                    </dl>
                 </div>
-            </div>
+            </section>
+        </main>
 
-            <!-- Features Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 fade-in" style="animation-delay: 0.6s">
-                <div class="border border-gray-800 rounded-lg p-4 md:p-6 bg-gray-950 hover:border-gray-700 transition-colors">
-                    <div class="text-sm font-mono text-gray-500 mb-2">01</div>
-                    <h3 class="text-base md:text-lg font-semibold mb-2">Real-time Delivery</h3>
-                    <p class="text-xs md:text-sm text-gray-400">Instant webhook notifications for onchain events</p>
-                </div>
-                
-                <div class="border border-gray-800 rounded-lg p-4 md:p-6 bg-gray-950 hover:border-gray-700 transition-colors">
-                    <div class="text-sm font-mono text-gray-500 mb-2">02</div>
-                    <h3 class="text-base md:text-lg font-semibold mb-2">Reliable Pipeline</h3>
-                    <p class="text-xs md:text-sm text-gray-400">Built-in retry logic and delivery guarantees</p>
-                </div>
-                
-                <div class="border border-gray-800 rounded-lg p-4 md:p-6 bg-gray-950 hover:border-gray-700 transition-colors">
-                    <div class="text-sm font-mono text-gray-500 mb-2">03</div>
-                    <h3 class="text-base md:text-lg font-semibold mb-2">Simple Integration</h3>
-                    <p class="text-xs md:text-sm text-gray-400">Easy setup with any webhook receiver</p>
-                </div>
-            </div>
-
-            <!-- Status Footer -->
-            <div class="text-center space-y-4 pt-8 fade-in" style="animation-delay: 0.8s">
-                <div class="inline-flex items-center space-x-2 text-sm text-gray-500">
-                    <div class="w-2 h-2 bg-gray-600 rounded-full status-dot"></div>
-                    <span class="font-mono">BUILDING IN PROGRESS</span>
-                </div>
-            </div>
-        </div>
+        <!-- Status Footer -->
+        <footer class="border-t border-gray-800 py-8 text-sm text-gray-400">
+            Building in progress.
+        </footer>
     </div>
 
     <script>
-        // Enhanced pipeline animation
+        // Pipeline animation
+        const NS = 'http://www.w3.org/2000/svg';
         const svg = document.getElementById('pipeline');
-        const bbox = svg.getBoundingClientRect();
-        const width = bbox.width;
-        const height = bbox.height;
-        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        const log = document.getElementById('log');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        const numParticles = 12;
+        const ENDPOINTS = ['/hooks/payments', '/hooks/indexer', '/hooks/alerts'];
+        const EVENTS = ['Transfer', 'Swap', 'Approval', 'Deposit', 'Mint'];
+        const chains = [
+            { name: 'Ethereum', block: 24712304 },
+            { name: 'Base', block: 52180467 },
+            { name: 'Arbitrum', block: 412880113 }
+        ];
+
+        const numParticles = 5;
+        const logRows = 4;
+        const speed = 0.45;     // path lengths per second
+        const failRate = 0.15;  // share of first attempts that get a 503
+
         const particles = [];
-        const nodes = [];
-        const semaphores = {
-            listening: [
-                document.getElementById('sem1'),
-                document.getElementById('sem2'),
-                document.getElementById('sem3')
-            ],
-            delivering: [
-                document.getElementById('sem4'),
-                document.getElementById('sem5'),
-                document.getElementById('sem6')
-            ]
-        };
-        let semIndexListen = 0;
-        let semIndexDeliver = 0;
+        let geo = null;
 
-        // Create blockchain node
-        const blockchain = {
-            x: 80,
-            y: height / 2,
-            radius: 20,
-            label: 'BLOCKCHAINS'
-        };
-
-        // Create processing nodes
-        const processor = {
-            x: width / 2,
-            y: height / 2,
-            radius: 15,
-            label: 'PROCESSING HUB'
-        };
-
-        // Create webhook nodes
-        const webhook1 = { x: width - 100, y: height / 2 - 40, radius: 12, label: 'ENDPOINT-A' };
-        const webhook2 = { x: width - 100, y: height / 2, radius: 12, label: 'ENDPOINT-B' };
-        const webhook3 = { x: width - 100, y: height / 2 + 40, radius: 12, label: 'ENDPOINT-C' };
-        
-        nodes.push(blockchain, processor, webhook1, webhook2, webhook3);
-
-        // Draw connections
-        const connections = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
-        
-        // Blockchain to processor
-        drawDashedLine(connections, blockchain.x + blockchain.radius, blockchain.y, processor.x - processor.radius, processor.y);
-        
-        // Processor to webhooks
-        drawDashedLine(connections, processor.x + processor.radius, processor.y, webhook1.x - webhook1.radius, webhook1.y);
-        drawDashedLine(connections, processor.x + processor.radius, processor.y, webhook2.x - webhook2.radius, webhook2.y);
-        drawDashedLine(connections, processor.x + processor.radius, processor.y, webhook3.x - webhook3.radius, webhook3.y);
-
-        // Draw nodes
-        const nodesGroup = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
-        nodes.forEach(node => {
-            if (node.label === 'PROCESSING HUB') {
-                // Draw triangle for processing hub
-                const triangle = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-                const size = node.radius;
-                const points = [
-                    `${node.x},${node.y - size}`,  // Top point
-                    `${node.x - size},${node.y + size}`,  // Bottom left
-                    `${node.x + size},${node.y + size}`   // Bottom right
-                ].join(' ');
-                triangle.setAttribute('points', points);
-                triangle.setAttribute('fill', '#111827');
-                triangle.setAttribute('stroke', '#374151');
-                triangle.setAttribute('stroke-width', '2');
-                nodesGroup.appendChild(triangle);
-            } else {
-                // Draw circle for other nodes
-                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('cx', node.x);
-                circle.setAttribute('cy', node.y);
-                circle.setAttribute('r', node.radius);
-                circle.setAttribute('fill', '#111827');
-                circle.setAttribute('stroke', '#374151');
-                circle.setAttribute('stroke-width', '2');
-                nodesGroup.appendChild(circle);
-            }
-
-            if (node.label.includes('ENDPOINT')) {
-                // add text inside
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', node.x);
-                text.setAttribute('y', node.y + 4);
-                text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('fill', '#6B7280');
-                text.setAttribute('font-size', '14');
-                text.setAttribute('font-family', 'monospace');
-                text.textContent = node.label.split('-')[1];
-                nodesGroup.appendChild(text);
-            } else {
-                // add text above
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', node.x);
-                text.setAttribute('y', node.y - node.radius - 10);
-                text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('fill', '#6B7280');
-                text.setAttribute('font-size', '10');
-                text.setAttribute('font-family', 'monospace');
-                text.textContent = node.label;
-                nodesGroup.appendChild(text);
-            }
-        });
-
-        // Particle system
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-
-            reset() {
-                this.x = blockchain.x + blockchain.radius;
-                this.y = blockchain.y;
-                this.progress = 0;
-                this.phase = 0; // 0: to processor, 1: to webhook
-                this.targetWebhook = Math.floor(Math.random() * 3);
-                this.opacity = 1;
-                
-                if (!this.element) {
-                    this.element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                    this.element.setAttribute('r', '3');
-                    this.element.setAttribute('fill', 'white');
-                    svg.appendChild(this.element);
-                }
-            }
-            update(dt) {
-                this.progress += dt * 1.2;
-
-                if (this.phase === 0) {
-                    // Moving to processor
-                    const t = Math.min(this.progress, 1);
-                    this.x = blockchain.x + blockchain.radius + (processor.x - processor.radius - blockchain.x - blockchain.radius) * t;
-                    this.y = blockchain.y;
-                    
-                    if (this.progress >= 1) {
-                        this.phase = 1;
-                        this.progress = 0;
-                        // Flash listening semaphore
-                        const sem = semaphores.listening[semIndexListen % 3];
-                        if (sem) {
-                            sem.classList.remove('bg-gray-700');
-                            sem.classList.add('bg-green-500');
-                            setTimeout(() => {
-                                if (sem) {
-                                    sem.classList.remove('bg-green-500');
-                                    sem.classList.add('bg-gray-700');
-                                }
-                            }, 300);
-                        }
-                        semIndexListen++;
-                    }
-                } else {
-                    // Moving to webhook
-                    const webhooks = [webhook1, webhook2, webhook3];
-                    const target = webhooks[this.targetWebhook];
-                    const t = Math.min(this.progress, 1);
-                    
-                    this.x = processor.x + processor.radius + (target.x - target.radius - processor.x - processor.radius) * t;
-                    this.y = processor.y + (target.y - processor.y) * t;
-                    this.opacity = t < 0.9 ? 1 : (1 - t) * 10;
-                    
-                    if (this.progress >= 1) {
-                        // Flash delivering semaphore
-                        const sem = semaphores.delivering[semIndexDeliver % 3];
-                        if (sem) {
-                            sem.classList.remove('bg-gray-700');
-                            sem.classList.add('bg-blue-500');
-                            setTimeout(() => {
-                                if (sem) {
-                                    sem.classList.remove('bg-blue-500');
-                                    sem.classList.add('bg-gray-700');
-                                }
-                            }, 300);
-                        }
-                        semIndexDeliver++;
-                        this.reset();
-                    }
-                }
-
-                this.element.setAttribute('cx', this.x);
-                this.element.setAttribute('cy', this.y);
-                this.element.setAttribute('opacity', this.opacity);
-            }
-            }
-        
-
-        // Initialize particles
-        for (let i = 0; i < numParticles; i++) {
-            const p = new Particle();
-            p.progress = i / numParticles;
-            particles.push(p);
+        function pick(list) {
+            return list[Math.floor(Math.random() * list.length)];
         }
 
+        function draw(name, attrs, text) {
+            const node = document.createElementNS(NS, name);
+            for (const key in attrs) node.setAttribute(key, attrs[key]);
+            if (text) node.textContent = text;
+            return svg.appendChild(node);
+        }
+
+        // Rebuilt on every resize so the diagram always fits its container
+        function layout() {
+            const { width, height } = svg.getBoundingClientRect();
+            if (!width || !height) return;
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.replaceChildren();
+
+            const wide = width >= 560;
+            const labelY = 12;
+            const cy = (height + 20) / 2;
+            const block = wide ? 22 : 16;
+            const gap = wide ? 10 : 6;
+            const chainEnd = 1 + block * 3 + gap * 2;
+            const hub = { x: width * (wide ? 0.44 : 0.5), r: wide ? 16 : 12 };
+            const dot = wide ? 7 : 6;
+            const endX = width - dot - (wide ? 132 : 2);
+            const spread = Math.min(height * 0.28, 68);
+
+            // Connections
+            const inPath = draw('path', { d: `M${chainEnd} ${cy}H${hub.x - hub.r}`, class: 'wire' });
+            const mid = (hub.x + hub.r + endX - dot) / 2;
+            const outPaths = ENDPOINTS.map((_, i) => {
+                const y = cy + (i - 1) * spread;
+                return draw('path', {
+                    d: `M${hub.x + hub.r} ${cy}C${mid} ${cy} ${mid} ${y} ${endX - dot} ${y}`,
+                    class: 'wire'
+                });
+            });
+
+            // Chain of blocks, newest on the right
+            for (let i = 0; i < 3; i++) {
+                const x = 1 + i * (block + gap);
+                if (i) draw('line', { x1: x - gap, y1: cy, x2: x, y2: cy, class: 'link' });
+                draw('rect', {
+                    x, y: cy - block / 2, width: block, height: block, rx: 3,
+                    class: i === 2 ? 'node node-latest' : 'node',
+                    opacity: 0.5 + i * 0.25
+                });
+            }
+
+            // Processing hub
+            draw('polygon', {
+                points: [
+                    `${hub.x},${cy - hub.r}`,
+                    `${hub.x + hub.r},${cy}`,
+                    `${hub.x},${cy + hub.r}`,
+                    `${hub.x - hub.r},${cy}`
+                ].join(' '),
+                class: 'node'
+            });
+
+            // Webhook endpoints
+            const endpointNodes = ENDPOINTS.map((path, i) => {
+                const y = cy + (i - 1) * spread;
+                if (wide) {
+                    draw('text', { x: endX + dot + 10, y: y + 4, class: 'diagram-path font-mono' }, path);
+                }
+                return draw('circle', { cx: endX, cy: y, r: dot, class: 'node' });
+            });
+
+            // Labels
+            draw('text', { x: 0, y: labelY, class: 'diagram-label' }, wide ? 'New blocks' : 'Blocks');
+            draw('text', { x: hub.x, y: labelY, 'text-anchor': 'middle', class: 'diagram-label' }, wide ? 'Decode and filter' : 'Filter');
+            if (wide) {
+                draw('text', { x: endX - dot, y: labelY, class: 'diagram-label' }, 'Your endpoints');
+            } else {
+                draw('text', { x: width, y: labelY, 'text-anchor': 'end', class: 'diagram-label' }, 'Endpoints');
+            }
+
+            geo = {
+                inPath,
+                outPaths,
+                inLen: inPath.getTotalLength(),
+                outLens: outPaths.map(path => path.getTotalLength()),
+                endpointNodes
+            };
+
+            particles.forEach(p => {
+                p.element = draw('circle', { r: 3, opacity: 0 });
+            });
+        }
+
+        // Delivery log
+        function cell(className, text) {
+            const span = document.createElement('span');
+            span.className = className;
+            span.textContent = text;
+            return span;
+        }
+
+        function addRow(event, target, failed) {
+            const path = cell('path', ENDPOINTS[target]);
+            path.prepend(cell('verb', 'POST '));
+
+            const row = document.createElement('li');
+            row.className = 'log-row';
+            row.append(
+                cell('block', `${event.chain} ${event.block.toLocaleString('en-US')}`),
+                cell('name', event.name),
+                path,
+                cell(failed ? 'status-retry' : 'status-ok', failed ? '503 retrying' : '200 OK'),
+                cell('ms', `${20 + Math.floor(Math.random() * 70)} ms`)
+            );
+            log.prepend(row);
+            while (log.children.length > logRows) log.lastElementChild.remove();
+        }
+
+        function flash(node, className) {
+            node.classList.add(className);
+            setTimeout(() => node.classList.remove(className), 180);
+        }
+
+        // Particle system
+        function spawn(p, delay = 0) {
+            const chain = pick(chains);
+            chain.block += 1;
+            p.event = { chain: chain.name, block: chain.block, name: pick(EVENTS) };
+            p.target = Math.floor(Math.random() * ENDPOINTS.length);
+            p.phase = 0; // 0: to processor, 1: to webhook
+            p.attempt = 1;
+            p.progress = -delay;
+        }
+
+        function deliver(p) {
+            const failed = p.attempt === 1 && Math.random() < failRate;
+            addRow(p.event, p.target, failed);
+            flash(geo.endpointNodes[p.target], failed ? 'flash-retry' : 'flash-ok');
+
+            if (failed) {
+                // Resend from the hub
+                p.attempt = 2;
+                p.progress = 0;
+            } else {
+                spawn(p);
+            }
+        }
+
+        function update(p, dt) {
+            p.progress += dt * speed;
+
+            if (p.progress >= 1) {
+                if (p.phase === 0) {
+                    p.phase = 1;
+                    p.progress = 0;
+                } else {
+                    deliver(p);
+                }
+            }
+
+            const path = p.phase === 0 ? geo.inPath : geo.outPaths[p.target];
+            const length = p.phase === 0 ? geo.inLen : geo.outLens[p.target];
+            const point = path.getPointAtLength(length * Math.max(p.progress, 0));
+
+            p.element.setAttribute('cx', point.x);
+            p.element.setAttribute('cy', point.y);
+            p.element.setAttribute('class', p.phase === 0 ? 'particle particle-event' : 'particle');
+            p.element.setAttribute('opacity', p.progress < 0 ? 0 : 1);
+        }
+
+        // Start with a full log so it never renders empty
+        for (let i = 0; i < logRows; i++) {
+            const seed = {};
+            spawn(seed);
+            addRow(seed.event, seed.target, false);
+        }
+
+        // Initialize particles, spaced evenly along the two-phase trip
+        if (!reducedMotion) {
+            for (let i = 0; i < numParticles; i++) {
+                const p = {};
+                spawn(p, (i * 2) / numParticles);
+                particles.push(p);
+            }
+        }
+
+        layout();
+        new ResizeObserver(layout).observe(svg);
+
         // Animation loop
-        let lastTime = Date.now();
-        function animate() {
-            const now = Date.now();
-            const dt = (now - lastTime) / 1000;
+        let lastTime = performance.now();
+        function animate(now) {
+            // Capped so particles don't jump after the tab was in the background
+            const dt = Math.min((now - lastTime) / 1000, 0.05);
             lastTime = now;
 
-            particles.forEach(p => p.update(dt));
+            if (geo) particles.forEach(p => update(p, dt));
             requestAnimationFrame(animate);
         }
 
-        animate();
-
-        function drawDashedLine(parent, x1, y1, x2, y2) {
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', x1);
-            line.setAttribute('y1', y1);
-            line.setAttribute('x2', x2);
-            line.setAttribute('y2', y2);
-            line.setAttribute('stroke', '#374151');
-            line.setAttribute('stroke-width', '1');
-            line.setAttribute('stroke-dasharray', '4,4');
-            parent.appendChild(line);
-        }
+        if (!reducedMotion) requestAnimationFrame(animate);
     </script>
 </body>
 </html>
